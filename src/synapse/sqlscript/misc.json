@@ -1,0 +1,17 @@
+{
+	"name": "misc",
+	"properties": {
+		"content": {
+			"query": "\nSELECT\n     count(*)\nFROM\n    OPENROWSET(\n        BULK 'https://opnhckadlstorage.dfs.core.windows.net/curated/streaming/spark_structured_streaming_using_synapse/structured_streaming_eh/',\n        FORMAT = 'DELTA'\n    ) AS [result]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

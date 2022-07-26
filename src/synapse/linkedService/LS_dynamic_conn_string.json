@@ -1,0 +1,43 @@
+{
+	"name": "LS_dynamic_conn_string",
+	"properties": {
+		"parameters": {
+			"param_server_name": {
+				"type": "String",
+				"defaultValue": "NA"
+			},
+			"database_name": {
+				"type": "String",
+				"defaultValue": "NADB"
+			},
+			"username": {
+				"type": "String",
+				"defaultValue": "NA"
+			},
+			"ls_param_secret_name": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().param_server_name};Initial Catalog=@{linkedService().database_name};User ID=@{linkedService().username}",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AKV",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": {
+					"value": "@linkedService().ls_param_secret_name",
+					"type": "Expression"
+				}
+			}
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/linkedservices"
+}

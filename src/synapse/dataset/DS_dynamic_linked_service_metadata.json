@@ -1,0 +1,34 @@
+{
+	"name": "DS_dynamic_linked_service_metadata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_metadataDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "servername",
+				"type": "varchar"
+			},
+			{
+				"name": "databasename",
+				"type": "varchar"
+			},
+			{
+				"name": "tablename",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tbl_connectionstrings"
+		}
+	}
+}

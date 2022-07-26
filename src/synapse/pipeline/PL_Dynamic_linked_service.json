@@ -1,0 +1,137 @@
+{
+	"name": "PL_Dynamic_linked_service",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_metadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_metadata').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_dynamic_conn_string",
+									"type": "DatasetReference",
+									"parameters": {
+										"param_dataset_schemaname": {
+											"value": "@{item().schemaname}",
+											"type": "Expression"
+										},
+										"dataset_param_tablename": {
+											"value": "@{item().tablename}",
+											"type": "Expression"
+										},
+										"dataset_param_server_name": {
+											"value": "@{item().servername}",
+											"type": "Expression"
+										},
+										"dataset_param_database_name": {
+											"value": "@{item().databasename}",
+											"type": "Expression"
+										},
+										"dataset_param_username": {
+											"value": "@{item().username}",
+											"type": "Expression"
+										},
+										"dataset_param_keyvaultsecretname": {
+											"value": "@{item().keyvaultsecretname}",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_staging_csv",
+									"type": "DatasetReference",
+									"parameters": {
+										"directoryname": {
+											"value": "@{item().servername}.@{item().databasename}",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@{item().schemaname}.@{item().tablename}.csv",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Lookup_metadata",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_dynamic_linked_service_metadata",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"folder": {
+			"name": "Misc"
+		},
+		"annotations": []
+	}
+}

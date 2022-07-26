@@ -1,0 +1,23 @@
+{
+	"name": "DS_Destination_BLOB_CSV_staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Blob_Storage_Staging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "testFile.csv",
+				"folderPath": "Dest",
+				"container": "test"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

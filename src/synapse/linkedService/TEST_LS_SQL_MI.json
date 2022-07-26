@@ -1,0 +1,14 @@
+{
+	"name": "TEST_LS_SQL_MI",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=opnhckdasqlsvr.database.windows.net;Initial Catalog=opnhckdasqldb"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

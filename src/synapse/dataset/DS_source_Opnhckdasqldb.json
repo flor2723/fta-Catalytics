@@ -1,0 +1,12 @@
+{
+	"name": "DS_source_Opnhckdasqldb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Opnhckdasqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

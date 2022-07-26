@@ -1,0 +1,23 @@
+{
+	"name": "DataSet_Excel_to_CSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Blob_Storage_Staging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "OutputCSVfromExcel.csv",
+				"folderPath": "ExcelSource",
+				"container": "test"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
