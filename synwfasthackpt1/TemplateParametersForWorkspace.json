@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synwfasthackpt1"
+		},
+		"LS_dynamic_conn_string_connectionString": {
+			"value": ""
+		},
+		"synwfasthackpt1-WorkspaceDefaultSqlServer_connectionString": {
+			"value": ""
+		},
+		"LS_ADLS_G2_properties_typeProperties_url": {
+			"value": "https://opnhckadlstorage.dfs.core.windows.net"
+		},
+		"LS_AKV_properties_typeProperties_baseUrl": {
+			"value": "https://opnhckdaakv.vault.azure.net/"
+		},
+		"LS_Blob_Storage_Staging_properties_typeProperties_connectionString_secretName": {
+			"value": "connopnhckstorage"
+		},
+		"LS_Opnhckdasqldb_properties_typeProperties_connectionString_secretName": {
+			"value": "connopnhckdasqldb"
+		},
+		"LS_metadataDB_properties_typeProperties_connectionString_secretName": {
+			"value": "connstrmetadatadb"
+		},
+		"opnhckdasynapsews-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://opnhckdasynapseadlsg2.dfs.core.windows.net"
+		},
+		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://adlsynfasthackpt1.dfs.core.windows.net"
+		},
+		"trigger_StreamAnalyticsOutput_properties_typeProperties_scope": {
+			"value": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/openhack_data_analytics/providers/Microsoft.Storage/storageAccounts/opnhckstorage"
+		}
+	}
+}
