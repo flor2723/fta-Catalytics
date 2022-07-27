@@ -5,9 +5,6 @@
 		"workspaceName": {
 			"value": "synwfasthackpt1"
 		},
-		"LS_dynamic_conn_string_connectionString": {
-			"value": ""
-		},
 		"synwfasthackpt1-WorkspaceDefaultSqlServer_connectionString": {
 			"value": ""
 		},
@@ -25,9 +22,6 @@
 		},
 		"LS_metadataDB_properties_typeProperties_connectionString_secretName": {
 			"value": "connstrmetadatadb"
-		},
-		"opnhckdasynapsews-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"value": "https://opnhckdasynapseadlsg2.dfs.core.windows.net"
 		},
 		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://adlsynfasthackpt1.dfs.core.windows.net"
