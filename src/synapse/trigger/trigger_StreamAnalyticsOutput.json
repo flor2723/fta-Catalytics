@@ -3,18 +3,7 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Stopped",
-		"pipelines": [
-			{
-				"pipelineReference": {
-					"referenceName": "EH_capture",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"sourceFolder": "@triggerBody().folderPath",
-					"sourceFile": "@triggerBody().fileName"
-				}
-			}
-		],
+		"pipelines": [],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
 			"blobPathBeginsWith": "/streamanalyticsoutput/blobs/",
