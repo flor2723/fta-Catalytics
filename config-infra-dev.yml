@@ -1,0 +1,27 @@
+variables:
+
+  # Global
+  ap_vm_image: ubuntu-20.04
+
+  location: eastus 
+  prefix: fasthack 
+  postfix: pt1
+  env:  
+  objectID: '2d5dfae5-ae9c-46c9-a4b2-e2973af76103' 
+  sqladministratorLoginPassword: 'D0nt$hare' 
+
+  # Azure DevOps 
+  ado_service_connection_rg: Azure-ARM-Dev
+
+
+  # IaC
+  baseName: $(prefix)$(postfix)$(env)
+  resourceGroupName: rg-$(baseName)
+  storageAccountName: st$(baseName)
+  dataLakeAccountName: dl$(baseName)
+  sqlServerName: sqlsvr$(baseName)
+  databaseName: sampledb
+  synapseWorkspace: synw$(baseName)
+  synapsedatalakegen2name: adlsyn$(baseName)
+
+

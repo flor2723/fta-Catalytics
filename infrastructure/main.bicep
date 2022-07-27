@@ -77,6 +77,8 @@ module sqlsvr './modules/sqlserver.bicep' = {
     tags: tags
     administratorLogin: 'rootuser'
     administratorLoginPassword: sqladministratorLoginPassword
+    databaseName: 'sampledb'
+
   }
 }
 

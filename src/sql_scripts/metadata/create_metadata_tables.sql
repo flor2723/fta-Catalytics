@@ -1,4 +1,4 @@
-USE metadatadb
+USE sampledb
 GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tablses_to_copy]') AND type in (N'U'))
@@ -44,7 +44,7 @@ Select 'SalesLT','SalesOrderHeader', 0 , 'ModifiedDate', '2000-01-01 13:00:00', 
 
 GO
 
-USE metadatadb
+USE sampledb
 GO
 
 DROP PROC IF EXISTS dbo.usp_update_watermark_datetime

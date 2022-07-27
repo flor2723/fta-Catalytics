@@ -4,6 +4,7 @@ param tags object
 param administratorLogin string
 @secure()
 param administratorLoginPassword string
+param databaseName string
 
 
 
@@ -22,7 +23,7 @@ resource sqlserver 'Microsoft.Sql/servers@2021-11-01-preview' = {
 
 
 resource sqlserverdatabase 'Microsoft.Sql/servers/databases@2021-11-01-preview' = {
-  name: name
+  name: databaseName
   location: location
   tags: tags
   sku: {
