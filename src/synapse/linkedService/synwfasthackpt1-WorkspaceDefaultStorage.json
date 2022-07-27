@@ -1,9 +1,9 @@
 {
-	"name": "opnhckdasynapsews-WorkspaceDefaultStorage",
+	"name": "synwfasthackpt1-WorkspaceDefaultStorage",
 	"type": "Microsoft.Synapse/workspaces/linkedservices",
 	"properties": {
 		"typeProperties": {
-			"url": "https://opnhckdasynapseadlsg2.dfs.core.windows.net"
+			"url": "https://adlsynfasthackpt1.dfs.core.windows.net"
 		},
 		"type": "AzureBlobFS",
 		"connectVia": {

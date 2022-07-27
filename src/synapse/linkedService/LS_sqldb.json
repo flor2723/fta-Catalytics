@@ -1,5 +1,5 @@
 {
-	"name": "LS_metadataDB",
+	"name": "LS_sqldb",
 	"properties": {
 		"annotations": [],
 		"type": "AzureSqlDatabase",
@@ -10,7 +10,7 @@
 					"referenceName": "LS_AKV",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "connstrmetadatadb"
+				"secretName": "connsampledb"
 			}
 		},
 		"connectVia": {
