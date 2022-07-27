@@ -2,7 +2,7 @@
 	"name": "DS_metadata",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_metadataDB",
+			"referenceName": "LS_sqldb",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
