@@ -42,12 +42,12 @@ stages :
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              echo parameters.sqlserveradminpassword
+              echo ${{ parameters.sqlserveradminpassword }}
               az deployment sub validate \
                 --name $(Build.DefinitionName) \
                 --template-file ./infrastructure/main.bicep \
                 --location $(location) \
-                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=parameters.sqlserveradminpassword
+                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
   - stage: CheckOutBicepAndDeploy
     displayName: Deploy AML Workspace
@@ -75,4 +75,4 @@ stages :
                     --name $(Build.DefinitionName) \
                     --location $(location) \
                     --template-file ./infrastructure/main.bicep \
-                    --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=parameters.sqlserveradminpassword
+                    --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
