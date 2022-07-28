@@ -41,7 +41,7 @@ stages :
                 --name $(Build.DefinitionName) \
                 --template-file ./infrastructure/main.bicep \
                 --location $(location) \
-                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(env) objectID=$(objectID) sqladministratorLoginPassword=$(sqladministratorLoginPassword)
+                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=$(sqladministratorLoginPassword)
 
   - stage: CheckOutBicepAndDeploy
     displayName: Deploy AML Workspace
@@ -69,4 +69,4 @@ stages :
                     --name $(Build.DefinitionName) \
                     --location $(location) \
                     --template-file ./infrastructure/main.bicep \
-                    --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(env) objectID=$(objectID) sqladministratorLoginPassword=$(sqladministratorLoginPassword)
+                    --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=$(sqladministratorLoginPassword)

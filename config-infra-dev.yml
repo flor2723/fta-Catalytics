@@ -6,7 +6,7 @@ variables:
   location: eastus 
   prefix: fasthack 
   postfix: pt1
-  env:  
+  environment: dev
   objectID: '2d5dfae5-ae9c-46c9-a4b2-e2973af76103' 
   sqladministratorLoginPassword: 'D0nt$hare' 
 
@@ -15,7 +15,7 @@ variables:
 
 
   # IaC
-  baseName: $(prefix)$(postfix)$(env)
+  baseName: $(prefix)$(postfix)$(environment)
   resourceGroupName: rg-$(baseName)
   storageAccountName: st$(baseName)
   dataLakeAccountName: dl$(baseName)
