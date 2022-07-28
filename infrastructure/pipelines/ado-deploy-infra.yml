@@ -37,6 +37,7 @@ stages :
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
+            echo $(sqladministratorLoginPassword)
               az deployment sub validate \
                 --name $(Build.DefinitionName) \
                 --template-file ./infrastructure/main.bicep \
