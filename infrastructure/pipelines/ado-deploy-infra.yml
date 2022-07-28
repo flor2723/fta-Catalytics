@@ -1,6 +1,11 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+parameters:
+- name: sqlserveradminpassword
+  type: string
+
+
 variables:
     # 'develop' or feature branches: DEV environment
     - template: ../../config-infra-dev.yml
@@ -37,12 +42,12 @@ stages :
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              echo $(sqladministratorLoginPassword)
+              echo parameters.sqlserveradminpassword
               az deployment sub validate \
                 --name $(Build.DefinitionName) \
                 --template-file ./infrastructure/main.bicep \
                 --location $(location) \
-                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword='D0nt$hare' 
+                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=parameters.sqlserveradminpassword
 
   - stage: CheckOutBicepAndDeploy
     displayName: Deploy AML Workspace
@@ -70,4 +75,4 @@ stages :
                     --name $(Build.DefinitionName) \
                     --location $(location) \
                     --template-file ./infrastructure/main.bicep \
-                    --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=$(sqladministratorLoginPassword)
+                    --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=parameters.sqlserveradminpassword

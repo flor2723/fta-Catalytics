@@ -8,7 +8,7 @@ variables:
   postfix: pt1
   environment: dev
   objectID: '2d5dfae5-ae9c-46c9-a4b2-e2973af76103' 
-  sqladministratorLoginPassword: 'D0nt$hareD0nt$hare' 
+  # sqladministratorLoginPassword: "D0nt$hareD0nt$hare"
 
   # Azure DevOps 
   ado_service_connection_rg: Azure-ARM-Dev-SAPA
