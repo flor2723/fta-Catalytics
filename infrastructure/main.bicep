@@ -47,7 +47,7 @@ module dl './modules/datalake_account.bicep' = {
   name: 'dl'
   scope: resourceGroup(rg.name)
   params: {
-    name: 'dl${baseName}'
+    name: 'adl${baseName}'
     location: location
     tags: tags
   }
