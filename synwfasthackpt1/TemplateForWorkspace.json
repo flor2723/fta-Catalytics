@@ -13,23 +13,19 @@
 		},
 		"LS_ADLS_G2_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://opnhckadlstorage.dfs.core.windows.net"
+			"defaultValue": "https://adlfasthackpt1.dfs.core.windows.net/"
 		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://opnhckdaakv.vault.azure.net/"
+			"defaultValue": "https://akvfasthackpt1.vault.azure.net/"
 		},
-		"LS_Blob_Storage_Staging_properties_typeProperties_connectionString_secretName": {
+		"LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint": {
 			"type": "string",
-			"defaultValue": "connopnhckstorage"
+			"defaultValue": "https://stfasthackpt1.blob.core.windows.net/"
 		},
-		"LS_Opnhckdasqldb_properties_typeProperties_connectionString_secretName": {
+		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
-			"defaultValue": "connopnhckdasqldb"
-		},
-		"LS_metadataDB_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "connstrmetadatadb"
+			"defaultValue": "sqlconn-sampledb"
 		},
 		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -651,7 +647,7 @@
 												},
 												"inputs": [
 													{
-														"referenceName": "DS_source_Opnhckdasqldb",
+														"referenceName": "DS_source_samplesqldb",
 														"type": "DatasetReference",
 														"parameters": {}
 													}
@@ -732,7 +728,7 @@
 													}
 												},
 												"linkedServiceName": {
-													"referenceName": "LS_metadataDB",
+													"referenceName": "LS_sqldb",
 													"type": "LinkedServiceReference"
 												}
 											}
@@ -783,7 +779,7 @@
 												},
 												"inputs": [
 													{
-														"referenceName": "DS_source_Opnhckdasqldb",
+														"referenceName": "DS_source_samplesqldb",
 														"type": "DatasetReference",
 														"parameters": {}
 													}
@@ -825,9 +821,9 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/datasets/DS_metadata')]",
-				"[concat(variables('workspaceId'), '/datasets/DS_source_Opnhckdasqldb')]",
+				"[concat(variables('workspaceId'), '/datasets/DS_source_samplesqldb')]",
 				"[concat(variables('workspaceId'), '/datasets/DS_staging_csv')]",
-				"[concat(variables('workspaceId'), '/linkedServices/LS_metadataDB')]"
+				"[concat(variables('workspaceId'), '/linkedServices/LS_sqldb')]"
 			]
 		},
 		{
@@ -1099,7 +1095,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "LS_metadataDB",
+					"referenceName": "LS_sqldb",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -1140,16 +1136,16 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/LS_metadataDB')]"
+				"[concat(variables('workspaceId'), '/linkedServices/LS_sqldb')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/DS_source_Opnhckdasqldb')]",
+			"name": "[concat(parameters('workspaceName'), '/DS_source_samplesqldb')]",
 			"type": "Microsoft.Synapse/workspaces/datasets",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "LS_Opnhckdasqldb",
+					"referenceName": "LS_sqldb",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -1158,7 +1154,7 @@
 				"typeProperties": {}
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/LS_Opnhckdasqldb')]"
+				"[concat(variables('workspaceId'), '/linkedServices/LS_sqldb')]"
 			]
 		},
 		{
@@ -1244,14 +1240,7 @@
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AKV",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('LS_Blob_Storage_Staging_properties_typeProperties_connectionString_secretName')]"
-					}
+					"serviceEndpoint": "[parameters('LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint')]"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -1259,12 +1248,11 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
-				"[concat(variables('workspaceId'), '/linkedServices/LS_AKV')]"
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/LS_Opnhckdasqldb')]",
+			"name": "[concat(parameters('workspaceName'), '/LS_sqldb')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -1277,34 +1265,7 @@
 							"referenceName": "LS_AKV",
 							"type": "LinkedServiceReference"
 						},
-						"secretName": "[parameters('LS_Opnhckdasqldb_properties_typeProperties_connectionString_secretName')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "AutoResolveIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
-				"[concat(variables('workspaceId'), '/linkedServices/LS_AKV')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/LS_metadataDB')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AKV",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('LS_metadataDB_properties_typeProperties_connectionString_secretName')]"
+						"secretName": "[parameters('LS_sqldb_properties_typeProperties_connectionString_secretName')]"
 					}
 				},
 				"connectVia": {
