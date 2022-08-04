@@ -4,14 +4,7 @@
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {
-			"connectionString": {
-				"type": "AzureKeyVaultSecret",
-				"store": {
-					"referenceName": "LS_AKV",
-					"type": "LinkedServiceReference"
-				},
-				"secretName": "connopnhckstorage"
-			}
+			"serviceEndpoint": "https://stfasthackpt1.blob.core.windows.net/"
 		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
