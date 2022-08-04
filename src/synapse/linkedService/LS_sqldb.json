@@ -10,7 +10,7 @@
 					"referenceName": "LS_AKV",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "connsampledb"
+				"secretName": "sqlconn-sampledb"
 			}
 		},
 		"connectVia": {
