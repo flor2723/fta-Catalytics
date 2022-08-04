@@ -63,6 +63,10 @@
 						"currentDate": {
 							"value": "@pipeline().parameters.currentDate",
 							"type": "Expression"
+						},
+						"datalakeName": {
+							"value": "@pipeline().parameters.datalakeName",
+							"type": "Expression"
 						}
 					}
 				}
@@ -88,6 +92,10 @@
 					"parameters": {
 						"currentDate": {
 							"value": "@pipeline().parameters.currentDate",
+							"type": "Expression"
+						},
+						"datalakeName": {
+							"value": "@pipeline().parameters.datalakeName",
 							"type": "Expression"
 						}
 					}
@@ -198,6 +206,9 @@
 		],
 		"parameters": {
 			"currentDate": {
+				"type": "string"
+			},
+			"datalakeName": {
 				"type": "string"
 			}
 		},
