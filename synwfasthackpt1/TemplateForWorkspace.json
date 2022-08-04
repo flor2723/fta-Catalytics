@@ -139,6 +139,13 @@
 																"type": "Expression"
 															},
 															"type": "string"
+														},
+														"datalakeName": {
+															"value": {
+																"value": "@pipeline().parameters.datalakeName",
+																"type": "Expression"
+															},
+															"type": "string"
 														}
 													},
 													"snapshot": true,
@@ -161,6 +168,9 @@
 				},
 				"parameters": {
 					"currentDate": {
+						"type": "string"
+					},
+					"datalakeName": {
 						"type": "string"
 					}
 				},
@@ -278,6 +288,13 @@
 																"type": "Expression"
 															},
 															"type": "string"
+														},
+														"datalakeName": {
+															"value": {
+																"value": "@pipeline().parameters.datalakeName",
+																"type": "Expression"
+															},
+															"type": "string"
 														}
 													},
 													"snapshot": true,
@@ -300,6 +317,9 @@
 				},
 				"parameters": {
 					"currentDate": {
+						"type": "string"
+					},
+					"datalakeName": {
 						"type": "string"
 					}
 				},
@@ -379,6 +399,10 @@
 								"currentDate": {
 									"value": "@pipeline().parameters.currentDate",
 									"type": "Expression"
+								},
+								"datalakeName": {
+									"value": "@pipeline().parameters.datalakeName",
+									"type": "Expression"
 								}
 							}
 						}
@@ -404,6 +428,10 @@
 							"parameters": {
 								"currentDate": {
 									"value": "@pipeline().parameters.currentDate",
+									"type": "Expression"
+								},
+								"datalakeName": {
+									"value": "@pipeline().parameters.datalakeName",
 									"type": "Expression"
 								}
 							}
@@ -521,6 +549,9 @@
 				},
 				"parameters": {
 					"currentDate": {
+						"type": "string"
+					},
+					"datalakeName": {
 						"type": "string"
 					}
 				},
@@ -1431,7 +1462,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "0fc7b48c-65c6-4df5-888f-8753a2a0f930"
+						"spark.autotune.trackingId": "597b5b70-a0d2-4a8d-a33a-5aaeeef38ffb"
 					}
 				},
 				"metadata": {
@@ -1445,18 +1476,19 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/openhack_data_analytics/providers/Microsoft.Synapse/workspaces/opnhckdasynapsews/bigDataPools/sparkpool",
+						"id": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool",
 						"name": "sparkpool",
 						"type": "Spark",
-						"endpoint": "https://opnhckdasynapsews.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool",
+						"endpoint": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
 						},
 						"sparkVersion": "3.1",
-						"nodeCount": 10,
+						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -1471,7 +1503,8 @@
 						"source": [
 							"date = \"2022-03-29\"\r\n",
 							"schema_name = \"SalesLT\"\r\n",
-							"table_name = \"Address\""
+							"table_name = \"Address\"\r\n",
+							"datalakeName = \"opnhckadlstorage\""
 						],
 						"outputs": [],
 						"execution_count": 1
@@ -1527,7 +1560,7 @@
 						},
 						"source": [
 							"from notebookutils import mssparkutils\r\n",
-							"files =mssparkutils.fs.ls(f'abfss://raw@opnhckadlstorage.dfs.core.windows.net/{date}/{schema_name}.{table_name}')"
+							"files =mssparkutils.fs.ls(f'abfss://raw@{datalakeName}.dfs.core.windows.net/{date}/{schema_name}.{table_name}')"
 						],
 						"outputs": [],
 						"execution_count": 11
@@ -1665,7 +1698,7 @@
 						"source": [
 							"%%pyspark\r\n",
 							"table_full_name = f\"curated.{schema_name}_{table_name}\"\r\n",
-							"table_delta_file_location = f\"abfss://curated@opnhckadlstorage.dfs.core.windows.net/{schema_name}.{table_name}\""
+							"table_delta_file_location = f\"abfss://curated@{datalakeName}.dfs.core.windows.net/{schema_name}.{table_name}\""
 						],
 						"outputs": [],
 						"execution_count": 45
@@ -1772,7 +1805,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "75fd830d-ddc7-480b-ab5d-a74fe35baa76"
+						"spark.autotune.trackingId": "5e5d0322-2edf-4855-aa9c-1a9c436fe15d"
 					}
 				},
 				"metadata": {
@@ -1786,18 +1819,19 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/openhack_data_analytics/providers/Microsoft.Synapse/workspaces/opnhckdasynapsews/bigDataPools/sparkpool",
+						"id": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool",
 						"name": "sparkpool",
 						"type": "Spark",
-						"endpoint": "https://opnhckdasynapsews.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool",
+						"endpoint": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
 						},
 						"sparkVersion": "3.1",
-						"nodeCount": 10,
+						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -1813,6 +1847,7 @@
 							"date = \"2022-03-29\"\r\n",
 							"schema_name = \"SalesLT\"\r\n",
 							"table_name = \"SalesOrderDetail\"\r\n",
+							"datalakeName = \"opnhckadlstorage\"\r\n",
 							"merge_join_condition = \"source.SalesOrderDetailID = target.SalesOrderDetailID\""
 						],
 						"outputs": [],
@@ -1870,7 +1905,7 @@
 						},
 						"source": [
 							"from notebookutils import mssparkutils\r\n",
-							"files =mssparkutils.fs.ls(f'abfss://raw@opnhckadlstorage.dfs.core.windows.net/{date}/{schema_name}.{table_name}')"
+							"files =mssparkutils.fs.ls(f'abfss://raw@{datalakeName}.dfs.core.windows.net/{date}/{schema_name}.{table_name}')"
 						],
 						"outputs": [],
 						"execution_count": 3
@@ -1985,7 +2020,7 @@
 						"source": [
 							"%%pyspark\r\n",
 							"table_full_name = f\"curated.{schema_name}_{table_name}\"\r\n",
-							"table_delta_file_location = f\"abfss://curated@opnhckadlstorage.dfs.core.windows.net/{schema_name}.{table_name}\""
+							"table_delta_file_location = f\"abfss://curated@{datalakeName}.dfs.core.windows.net/{schema_name}.{table_name}\""
 						],
 						"outputs": [],
 						"execution_count": 8
