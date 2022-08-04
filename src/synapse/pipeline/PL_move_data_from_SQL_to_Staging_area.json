@@ -186,6 +186,10 @@
 													"type": "DateTime"
 												}
 											}
+										},
+										"linkedServiceName": {
+											"referenceName": "LS_sqldb",
+											"type": "LinkedServiceReference"
 										}
 									}
 								],
