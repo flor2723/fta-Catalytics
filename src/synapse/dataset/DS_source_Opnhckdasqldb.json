@@ -2,7 +2,7 @@
 	"name": "DS_source_Opnhckdasqldb",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_Opnhckdasqldb",
+			"referenceName": "LS_sqldb",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
