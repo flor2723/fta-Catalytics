@@ -162,7 +162,7 @@
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"storedProcedureName": "[dbo].[usp_update_watermark_datetime]",
+											"storedProcedureName": "dbo.usp_update_watermark_datetime",
 											"storedProcedureParameters": {
 												"schemaName": {
 													"value": {
