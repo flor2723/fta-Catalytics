@@ -436,111 +436,6 @@
 								}
 							}
 						}
-					},
-					{
-						"name": "Message for the Starting of ADF pipeline_copy1",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Raw to Curated Full",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Raw to Curated Incremental",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://prod-57.eastus.logic.azure.com:443/workflows/263e2a389cdd4b6c97e77b0f4d71f256/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GT9fzTUhkyQtbCJJ2qTTT2uBor3E4L-EpdCb3NEPFPg",
-							"connectVia": {
-								"referenceName": "AutoResolveIntegrationRuntime",
-								"type": "IntegrationRuntimeReference"
-							},
-							"method": "POST",
-							"headers": {},
-							"body": {
-								"value": "{\n    \"title\": \"@{pipeline().Pipeline} is finshed successfully\",\n    \"message\": \"Pipeline is completed successfully!\",\n    \"color\": \"Green\",\n    \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"pipelineRunId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcnow()}\"\n}",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "Failure ADF pipeline - SQL to Staging",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "SQL to Staging",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://prod-57.eastus.logic.azure.com:443/workflows/263e2a389cdd4b6c97e77b0f4d71f256/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GT9fzTUhkyQtbCJJ2qTTT2uBor3E4L-EpdCb3NEPFPg",
-							"connectVia": {
-								"referenceName": "AutoResolveIntegrationRuntime",
-								"type": "IntegrationRuntimeReference"
-							},
-							"method": "POST",
-							"headers": {},
-							"body": {
-								"value": "{\n    \"title\": \"@{pipeline().Pipeline} has failed\",\n    \"message\": \"Error: @{activity('SQL to Staging').output.error.message}\",\n    \"color\": \"Red\",\n    \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"pipelineRunId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcnow()}\"\n}",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "Failure ADF pipeline - Staging To Raw",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Staging to Raw",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://prod-57.eastus.logic.azure.com:443/workflows/263e2a389cdd4b6c97e77b0f4d71f256/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GT9fzTUhkyQtbCJJ2qTTT2uBor3E4L-EpdCb3NEPFPg",
-							"connectVia": {
-								"referenceName": "AutoResolveIntegrationRuntime",
-								"type": "IntegrationRuntimeReference"
-							},
-							"method": "POST",
-							"headers": {},
-							"body": {
-								"value": "{\n    \"title\": \"@{pipeline().Pipeline} has failed\",\n    \"message\": \"Error: @{activity('Staging to Raw').output.error.message}\",\n    \"color\": \"Red\",\n    \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"pipelineRunId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcnow()}\"\n}",
-								"type": "Expression"
-							}
-						}
 					}
 				],
 				"policy": {
@@ -561,8 +456,7 @@
 				"[concat(variables('workspaceId'), '/pipelines/PL_move_data_from_SQL_to_Staging_area')]",
 				"[concat(variables('workspaceId'), '/pipelines/PL_move_files_from_staging_to_raw')]",
 				"[concat(variables('workspaceId'), '/pipelines/PL_Curated_Full_Load')]",
-				"[concat(variables('workspaceId'), '/pipelines/PL_Curated_Incremental_Load')]",
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('workspaceId'), '/pipelines/PL_Curated_Incremental_Load')]"
 			]
 		},
 		{
@@ -1462,7 +1356,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "597b5b70-a0d2-4a8d-a33a-5aaeeef38ffb"
+						"spark.autotune.trackingId": "492fa698-4ec9-4823-a9b7-32ad1ce5aa8a"
 					}
 				},
 				"metadata": {
@@ -1805,7 +1699,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "5e5d0322-2edf-4855-aa9c-1a9c436fe15d"
+						"spark.autotune.trackingId": "fbe2e236-fdfc-4102-bd5d-47b5774cb6fc"
 					}
 				},
 				"metadata": {
