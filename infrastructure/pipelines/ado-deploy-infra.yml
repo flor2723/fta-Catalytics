@@ -16,6 +16,14 @@ trigger:
 pool:
   vmImage: $(ap_vm_image)
 
+resources:
+  repositories:
+  - repository: "fta-Catalytics-workspace-publish"
+    type: github
+    name: "Azure/fta-Catalytics"
+    ref: workspace_publish
+    endpoint: Azure
+
 stages :
   - stage: Lint
     displayName: Lint and Preflight check
@@ -75,3 +83,29 @@ stages :
                     --location $(location) \
                     --template-file ./infrastructure/main.bicep \
                     --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
+
+  - stage: SynapseArtifactsDeployment
+    displayName: Synapse pipelines/notebook/linkedservices/dataset deployment
+    jobs:
+    - job: _job_SynapseArtifactsDeployment
+      displayName: synapse artifacts deployment
+      steps:
+      - checkout: fta-Catalytics-workspace-publish
+      - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
+        displayName: 'Synapse deployment task for workspace: synwfasthackpt1dev'
+        inputs:
+          TemplateFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateForWorkspace.json'
+          ParametersFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateParametersForWorkspace.json'
+          azureSubscription: 'Azure-ARM-Dev-SAPA'
+          ResourceGroupName: $(resourceGroupName)
+          TargetWorkspaceName: $(synapseWorkspace)
+          OverrideArmParameters: |
+           -workspaceName $(synapseWorkspace) 
+           -LS_ADLS_G2_properties_typeProperties_url 'https://$(dataLakeAccountName).dfs.core.windows.net'
+           -LS_AKV_properties_typeProperties_baseUrl "https://$(keyVaultName).vault.azure.net" 
+           -LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint "https://$(storageAccountName).blob.core.windows.net" 
+           -Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_id "/subscriptions/$(subscriptionId)/resourceGroups/$(resourceGroupName)/providers/Microsoft.Synapse/workspaces/$(synapseWorkspace)/bigDataPools/sparkpool" 
+           -Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_endpoint "https://$(synapseWorkspace).dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool" 
+           -Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_id "/subscriptions/$(subscriptionId)/resourceGroups/$(resourceGroupName)/providers/Microsoft.Synapse/workspaces/$(synapseWorkspace)/bigDataPools/sparkpool" 
+           -Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_endpoint "https://$(synapseWorkspace).dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool" 
+           -PL_master_pipeline_properties_parameters_datalakeName_defaultValue $(dataLakeAccountName)
