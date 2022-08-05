@@ -11,10 +11,11 @@ trigger:
 
 resources:
   repositories:
-  - repository: fta-Catalytics
-    type: git
-    name: fta-Catalytics
+  - repository: "fta-Catalytics"
+    type: github
+    name: "Azure/fta-Catalytics"
     ref: workspace_publish
+    endpoint: Azure
 
 pool:
   vmImage: $(ap_vm_image)
