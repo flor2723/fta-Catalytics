@@ -19,6 +19,10 @@
 			"type": "string",
 			"defaultValue": "https://akvfasthackpt1.vault.azure.net/"
 		},
+		"LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://stfasthackpt1.blob.core.windows.net/"
+		},
 		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "sqlconn-sampledb"
@@ -1190,11 +1194,11 @@
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
-				"description": "this linked service connect to storage for the staging layer..",
+				"description": "this linked service connect to storage for the staging layer...",
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"serviceEndpoint": "https://stfasthackpt1.blob.core.windows.net/"
+					"serviceEndpoint": "[parameters('LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint')]"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
