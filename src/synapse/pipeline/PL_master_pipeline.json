@@ -63,6 +63,10 @@
 						"currentDate": {
 							"value": "@pipeline().parameters.currentDate",
 							"type": "Expression"
+						},
+						"datalakeName": {
+							"value": "@pipeline().parameters.datalakeName",
+							"type": "Expression"
 						}
 					}
 				}
@@ -89,115 +93,20 @@
 						"currentDate": {
 							"value": "@pipeline().parameters.currentDate",
 							"type": "Expression"
+						},
+						"datalakeName": {
+							"value": "@pipeline().parameters.datalakeName",
+							"type": "Expression"
 						}
-					}
-				}
-			},
-			{
-				"name": "Message for the Starting of ADF pipeline_copy1",
-				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "Raw to Curated Full",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Raw to Curated Incremental",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": "https://prod-57.eastus.logic.azure.com:443/workflows/263e2a389cdd4b6c97e77b0f4d71f256/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GT9fzTUhkyQtbCJJ2qTTT2uBor3E4L-EpdCb3NEPFPg",
-					"connectVia": {
-						"referenceName": "AutoResolveIntegrationRuntime",
-						"type": "IntegrationRuntimeReference"
-					},
-					"method": "POST",
-					"body": {
-						"value": "{\n    \"title\": \"@{pipeline().Pipeline} is finshed successfully\",\n    \"message\": \"Pipeline is completed successfully!\",\n    \"color\": \"Green\",\n    \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"pipelineRunId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcnow()}\"\n}",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "Failure ADF pipeline - SQL to Staging",
-				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "SQL to Staging",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": "https://prod-57.eastus.logic.azure.com:443/workflows/263e2a389cdd4b6c97e77b0f4d71f256/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GT9fzTUhkyQtbCJJ2qTTT2uBor3E4L-EpdCb3NEPFPg",
-					"connectVia": {
-						"referenceName": "AutoResolveIntegrationRuntime",
-						"type": "IntegrationRuntimeReference"
-					},
-					"method": "POST",
-					"body": {
-						"value": "{\n    \"title\": \"@{pipeline().Pipeline} has failed\",\n    \"message\": \"Error: @{activity('SQL to Staging').output.error.message}\",\n    \"color\": \"Red\",\n    \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"pipelineRunId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcnow()}\"\n}",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "Failure ADF pipeline - Staging To Raw",
-				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "Staging to Raw",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": "https://prod-57.eastus.logic.azure.com:443/workflows/263e2a389cdd4b6c97e77b0f4d71f256/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GT9fzTUhkyQtbCJJ2qTTT2uBor3E4L-EpdCb3NEPFPg",
-					"connectVia": {
-						"referenceName": "AutoResolveIntegrationRuntime",
-						"type": "IntegrationRuntimeReference"
-					},
-					"method": "POST",
-					"body": {
-						"value": "{\n    \"title\": \"@{pipeline().Pipeline} has failed\",\n    \"message\": \"Error: @{activity('Staging to Raw').output.error.message}\",\n    \"color\": \"Red\",\n    \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"pipelineRunId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcnow()}\"\n}",
-						"type": "Expression"
 					}
 				}
 			}
 		],
 		"parameters": {
 			"currentDate": {
+				"type": "string"
+			},
+			"datalakeName": {
 				"type": "string"
 			}
 		},

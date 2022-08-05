@@ -108,7 +108,7 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_source_Opnhckdasqldb",
+												"referenceName": "DS_source_samplesqldb",
 												"type": "DatasetReference"
 											}
 										],
@@ -188,7 +188,7 @@
 											}
 										},
 										"linkedServiceName": {
-											"referenceName": "LS_metadataDB",
+											"referenceName": "LS_sqldb",
 											"type": "LinkedServiceReference"
 										}
 									}
@@ -239,7 +239,7 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_source_Opnhckdasqldb",
+												"referenceName": "DS_source_samplesqldb",
 												"type": "DatasetReference"
 											}
 										],

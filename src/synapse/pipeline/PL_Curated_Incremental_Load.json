@@ -101,6 +101,13 @@
 														"type": "Expression"
 													},
 													"type": "string"
+												},
+												"datalakeName": {
+													"value": {
+														"value": "@pipeline().parameters.datalakeName",
+														"type": "Expression"
+													},
+													"type": "string"
 												}
 											},
 											"snapshot": true,
@@ -119,6 +126,9 @@
 		],
 		"parameters": {
 			"currentDate": {
+				"type": "string"
+			},
+			"datalakeName": {
 				"type": "string"
 			}
 		},

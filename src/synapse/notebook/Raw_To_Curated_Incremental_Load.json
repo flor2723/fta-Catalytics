@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "75fd830d-ddc7-480b-ab5d-a74fe35baa76"
+				"spark.autotune.trackingId": "f2ccde07-6950-4748-bf2d-e2a33046936a"
 			}
 		},
 		"metadata": {
@@ -31,16 +31,16 @@
 				"name": "python"
 			},
 			"a365ComputeOptions": {
-				"id": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/openhack_data_analytics/providers/Microsoft.Synapse/workspaces/opnhckdasynapsews/bigDataPools/sparkpool",
+				"id": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool",
 				"name": "sparkpool",
 				"type": "Spark",
-				"endpoint": "https://opnhckdasynapsews.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool",
+				"endpoint": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool",
 				"auth": {
 					"type": "AAD",
 					"authResource": "https://dev.azuresynapse.net"
 				},
 				"sparkVersion": "3.1",
-				"nodeCount": 10,
+				"nodeCount": 3,
 				"cores": 4,
 				"memory": 28,
 				"automaticScaleJobs": false
@@ -59,6 +59,7 @@
 					"date = \"2022-03-29\"\r\n",
 					"schema_name = \"SalesLT\"\r\n",
 					"table_name = \"SalesOrderDetail\"\r\n",
+					"datalakeName = \"opnhckadlstorage\"\r\n",
 					"merge_join_condition = \"source.SalesOrderDetailID = target.SalesOrderDetailID\""
 				],
 				"execution_count": 1
@@ -114,7 +115,7 @@
 				},
 				"source": [
 					"from notebookutils import mssparkutils\r\n",
-					"files =mssparkutils.fs.ls(f'abfss://raw@opnhckadlstorage.dfs.core.windows.net/{date}/{schema_name}.{table_name}')"
+					"files =mssparkutils.fs.ls(f'abfss://raw@{datalakeName}.dfs.core.windows.net/{date}/{schema_name}.{table_name}')"
 				],
 				"execution_count": 3
 			},
@@ -224,7 +225,7 @@
 				"source": [
 					"%%pyspark\r\n",
 					"table_full_name = f\"curated.{schema_name}_{table_name}\"\r\n",
-					"table_delta_file_location = f\"abfss://curated@opnhckadlstorage.dfs.core.windows.net/{schema_name}.{table_name}\""
+					"table_delta_file_location = f\"abfss://curated@{datalakeName}.dfs.core.windows.net/{schema_name}.{table_name}\""
 				],
 				"execution_count": 8
 			},
