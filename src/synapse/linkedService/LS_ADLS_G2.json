@@ -10,6 +10,6 @@
 			"referenceName": "AutoResolveIntegrationRuntime",
 			"type": "IntegrationRuntimeReference"
 		},
-		"description": "this is the linked service to connect to raw and curated zone"
+		"description": "this is the linked service to connect to raw and curated zone."
 	}
 }
