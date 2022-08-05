@@ -9,6 +9,7 @@
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
 			"type": "IntegrationRuntimeReference"
-		}
+		},
+		"description": "this is the linked service to connect to raw and curated zone"
 	}
 }
