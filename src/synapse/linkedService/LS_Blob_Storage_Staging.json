@@ -9,6 +9,7 @@
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
 			"type": "IntegrationRuntimeReference"
-		}
+		},
+		"description": "this linked service connect to storage for the staging layer."
 	}
 }
