@@ -68,8 +68,8 @@
                     "username": "=",
                     "connectionString": "|:-connectionString:secureString",
                     "secretAccessKey": "|",
-                    "url": "=",
-                    "serviceEndpoint" : "="
+                    "url": "-",
+                    "serviceEndpoint" : "-"
                 }
             }
         },
@@ -83,7 +83,7 @@
         "AzureKeyVault": {
             "properties": {
                 "typeProperties": {
-                    "baseUrl": "="
+                    "baseUrl": "-"
                 },
                 "parameters": {
                     "KeyVaultURL": {
