@@ -9,6 +9,13 @@ variables:
 trigger:
 - none
 
+resources:
+  repositories:
+  - repository: fta-Catalytics
+    type: git
+    name: fta-Catalytics
+    ref: workspace_publish
+
 pool:
   vmImage: $(ap_vm_image)
 
@@ -22,8 +29,8 @@ stages :
       - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
         displayName: 'Synapse deployment task for workspace: synwfasthackpt1dev'
         inputs:
-          TemplateFile: '$(System.DefaultWorkingDirectory)/_Azure_fta-Catalytics/synwfasthackpt1/TemplateForWorkspace.json'
-          ParametersFile: '$(System.DefaultWorkingDirectory)/_Azure_fta-Catalytics/synwfasthackpt1/TemplateParametersForWorkspace.json'
+          TemplateFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateForWorkspace.json'
+          ParametersFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateParametersForWorkspace.json'
           azureSubscription: 'Azure-ARM-Dev-SAPA'
           ResourceGroupName: $(resourceGroupName)
           TargetWorkspaceName: $(synapseWorkspace)
