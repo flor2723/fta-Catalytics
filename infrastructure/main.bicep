@@ -10,6 +10,17 @@ param sqladministratorLoginPassword string
 // param synapsedatalakegen2filesystemname string
 
 
+//variables
+var subscriptionId = subscription().subscriptionId
+var rdPrefix = '/subscriptions/${subscriptionId}/providers/Microsoft.Authorization/roleDefinitions'
+var role = {
+  Owner: '${rdPrefix}/8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
+  Contributor: '${rdPrefix}/b24988ac-6180-42a0-ab88-20f7382dd24c'
+  StorageBlobDataReader: '${rdPrefix}/2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'
+  StorageBlobDataContributor: '${rdPrefix}/ba92f5b4-2d11-453d-a403-e96b0029c9fe'
+}
+var sqladministratorLogin='rootuser'
+
 param tags object = {
   Owner: 'fasthack'
   Project: 'fasthack'
@@ -30,42 +41,6 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 }
 
 
-// Storage Account
-module st './modules/storage_account.bicep' = {
-  name: 'st'
-  scope: resourceGroup(rg.name)
-  params: {
-    name: 'st${baseName}'
-    location: location
-    tags: tags
-  }
-}
-
-// data lake
-
-module dl './modules/datalake_account.bicep' = {
-  name: 'dl'
-  scope: resourceGroup(rg.name)
-  params: {
-    name: 'adl${baseName}'
-    location: location
-    tags: tags
-  }
-}
-
-// key vault
-
-module kv './modules/key_vault.bicep' = {
-  name: 'kv'
-  scope: resourceGroup(rg.name)
-  params: {
-    name: 'akv${baseName}'
-    location: location
-    tags: tags
-    objectID: objectID
-  }
-}
-
 //sql server
 
 module sqlsvr './modules/sqlserver.bicep' = {
@@ -75,7 +50,7 @@ module sqlsvr './modules/sqlserver.bicep' = {
     name: 'sqlsvr${baseName}'
     location: location
     tags: tags
-    administratorLogin: 'rootuser'
+    administratorLogin: sqladministratorLogin
     administratorLoginPassword: sqladministratorLoginPassword
     databaseName: 'sampledb'
 
@@ -92,7 +67,7 @@ module synapse './modules/synapse.bicep' = {
     synapseName: 'synw${baseName}'
     location: location
     tags: tags
-    administratorLogin: 'rootuser'
+    administratorLogin: sqladministratorLogin
     administratorLoginPassword: sqladministratorLoginPassword
     datalakegen2name: 'adlsyn${baseName}'
     defaultDataLakeStorageFilesystemName: 'root'
@@ -102,4 +77,66 @@ module synapse './modules/synapse.bicep' = {
     sparkPoolMinNodeCount: 3
     sparkPoolMaxNodeCount: 3
   }
+}
+
+
+// Storage Account
+module st './modules/storage_account.bicep' = {
+  name: 'st'
+  scope: resourceGroup(rg.name)
+  params: {
+    name: 'st${baseName}'
+    location: location
+    tags: tags
+    roleAssignmentPrincipalID : synapse.outputs.synapsemanageidentity
+    roleAssignmnetPrincipalType : 'ServicePrincipal'
+    roleDefinitionId :  role['StorageBlobDataContributor']
+  }
+  dependsOn: [
+    synapse    
+  ]
+}
+
+// data lake
+
+module dl './modules/datalake_account.bicep' = {
+  name: 'dl'
+  scope: resourceGroup(rg.name)
+  params: {
+    name: 'adl${baseName}'
+    location: location
+    tags: tags
+    roleAssignmentPrincipalID : synapse.outputs.synapsemanageidentity
+    roleAssignmnetPrincipalType : 'ServicePrincipal'
+    roleDefinitionId :  role['StorageBlobDataContributor']
+  }
+  dependsOn: [
+    synapse    
+  ]
+  
+}
+
+
+
+// key vault  and secret creation
+
+module kv './modules/key_vault.bicep' = {
+  name: 'kv'
+  scope: resourceGroup(rg.name)
+  params: {
+    name: 'akv${baseName}'
+    location: location
+    tags: tags
+    objectID: objectID
+    synapseManageIdentity: synapse.outputs.synapsemanageidentity
+    administratorLoginPassword : sqladministratorLoginPassword
+    administratorLogin: sqladministratorLogin
+    sqlservername: sqlsvr.outputs.sqlservername
+    sqlserverDBName: sqlsvr.outputs.sqlserverDBName
+    sqlconnectionstring: 'Server=tcp:${sqlsvr.outputs.sqlservername},1433;Initial Catalog=${sqlsvr.outputs.sqlserverDBName};Persist Security Info=False;User ID=${sqladministratorLogin};Password=${sqladministratorLoginPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+  }
+  dependsOn:[
+    synapse
+    sqlsvr
+  ]
 }

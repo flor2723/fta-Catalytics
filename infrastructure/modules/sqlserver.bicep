@@ -19,6 +19,13 @@ resource sqlserver 'Microsoft.Sql/servers@2021-11-01-preview' = {
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
   }
+  resource firewall 'firewallRules' = {
+    name: 'allowAll'
+    properties: {
+      startIpAddress: '0.0.0.0'
+      endIpAddress: '255.255.255.255'
+    }
+  }
 }
 
 
@@ -37,3 +44,9 @@ resource sqlserverdatabase 'Microsoft.Sql/servers/databases@2021-11-01-preview' 
     minCapacity: json('0.5')
     }
 }
+
+
+output sqlservername string = sqlserver.properties.fullyQualifiedDomainName
+output sqlserverDBName  string =sqlserverdatabase.name
+
+

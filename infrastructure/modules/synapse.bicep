@@ -36,6 +36,7 @@ resource datalakegen2 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
 }
 
+
 // enabling the blob service
 resource blob 'Microsoft.Storage/storageAccounts/blobServices@2021-09-01' = {
   name:  '${datalakegen2.name}/default'
@@ -66,8 +67,16 @@ resource synapse 'Microsoft.Synapse/workspaces@2021-06-01' = {
   identity:{
     type:'SystemAssigned'
   }
+  resource firewall 'firewallRules' = {
+    name: 'allowAll'
+    properties: {
+      startIpAddress: '0.0.0.0'
+      endIpAddress: '255.255.255.255'
+    }
+  }
   tags: tags
 }
+output synapsemanageidentity string = synapse.identity.principalId
 
 // giving storage blob data contributor access to adls gen2 for the synapse manage identity.
 resource synapseroleassing 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
