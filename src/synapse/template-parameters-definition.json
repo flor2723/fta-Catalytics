@@ -68,7 +68,8 @@
                     "username": "=",
                     "connectionString": "|:-connectionString:secureString",
                     "secretAccessKey": "|",
-                    "url": "="
+                    "url": "=",
+                    "serviceEndpoint" : ""
                 }
             }
         },
