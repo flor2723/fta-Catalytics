@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'synwfasthackpt1-WorkspaceDefaultSqlServer'"
 		},
+		"LS_ADLS_G2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlfasthackpt1.dfs.core.windows.net/"
+		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://akvfasthackpt1.vault.azure.net/"
@@ -18,6 +22,10 @@
 		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "sqlconn-sampledb"
+		},
+		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsynfasthackpt1.dfs.core.windows.net"
 		},
 		"AutoResolveIntegrationRuntime_properties_typeProperties_computeProperties": {
 			"type": "object",
@@ -1149,11 +1157,11 @@
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
-				"description": "this is the linked service to connect to raw and curated zone",
+				"description": "this is the linked service to connect to raw and curated zone.",
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "https://adlfasthackpt1.dfs.core.windows.net/"
+					"url": "[parameters('LS_ADLS_G2_properties_typeProperties_url')]"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -1255,7 +1263,7 @@
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "https://adlsynfasthackpt1.dfs.core.windows.net"
+					"url": "[parameters('synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url')]"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -1309,7 +1317,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "d482bcc0-e410-4e23-acc3-b778b6bf57d1"
+						"spark.autotune.trackingId": "9267678b-933e-4d81-a89d-0db061f8c764"
 					}
 				},
 				"metadata": {
@@ -1334,8 +1342,7 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},

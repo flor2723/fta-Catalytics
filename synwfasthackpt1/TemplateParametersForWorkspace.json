@@ -8,11 +8,17 @@
 		"synwfasthackpt1-WorkspaceDefaultSqlServer_connectionString": {
 			"value": ""
 		},
+		"LS_ADLS_G2_properties_typeProperties_url": {
+			"value": "https://adlfasthackpt1.dfs.core.windows.net/"
+		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
 			"value": "https://akvfasthackpt1.vault.azure.net/"
 		},
 		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
 			"value": "sqlconn-sampledb"
+		},
+		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://adlsynfasthackpt1.dfs.core.windows.net"
 		},
 		"AutoResolveIntegrationRuntime_properties_typeProperties_computeProperties": {
 			"value": {
