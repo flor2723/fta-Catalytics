@@ -108,7 +108,7 @@
 			},
 			"datalakeName": {
 				"type": "string",
-				"defaultValue": "adlfasthackpt1"
+				"defaultValue": "adlfasthackpt11"
 			}
 		},
 		"annotations": []
