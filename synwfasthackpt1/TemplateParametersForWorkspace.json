@@ -27,8 +27,20 @@
 		"Raw_To_Curated_Full_Load_properties_bigDataPool_referenceName": {
 			"value": "sparkpool"
 		},
+		"Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_id": {
+			"value": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool"
+		},
+		"Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_endpoint": {
+			"value": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool"
+		},
 		"Raw_To_Curated_Incremental_Load_properties_bigDataPool_referenceName": {
 			"value": "sparkpool"
+		},
+		"Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_id": {
+			"value": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool"
+		},
+		"Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_endpoint": {
+			"value": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool"
 		}
 	}
 }

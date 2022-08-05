@@ -34,9 +34,25 @@
 			"type": "string",
 			"defaultValue": "sparkpool"
 		},
+		"Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_id": {
+			"type": "string",
+			"defaultValue": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool"
+		},
+		"Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_endpoint": {
+			"type": "string",
+			"defaultValue": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool"
+		},
 		"Raw_To_Curated_Incremental_Load_properties_bigDataPool_referenceName": {
 			"type": "string",
 			"defaultValue": "sparkpool"
+		},
+		"Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_id": {
+			"type": "string",
+			"defaultValue": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool"
+		},
+		"Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_endpoint": {
+			"type": "string",
+			"defaultValue": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool"
 		}
 	},
 	"variables": {
@@ -1292,7 +1308,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "cd07ded9-9304-4ab4-9dea-4af4e408b6c8"
+						"spark.autotune.trackingId": "13d996cb-c66e-4543-83d7-55727002c308"
 					}
 				},
 				"metadata": {
@@ -1306,10 +1322,10 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool",
+						"id": "[parameters('Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_id')]",
 						"name": "sparkpool",
 						"type": "Spark",
-						"endpoint": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool",
+						"endpoint": "[parameters('Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_endpoint')]",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
@@ -1335,7 +1351,7 @@
 							"schema_name = \"SalesLT\"\r\n",
 							"table_name = \"Address\"\r\n",
 							"datalakeName = \"opnhckadlstorage\"\r\n",
-							"##"
+							"###"
 						],
 						"outputs": [],
 						"execution_count": 1
@@ -1650,10 +1666,10 @@
 						"name": "python"
 					},
 					"a365ComputeOptions": {
-						"id": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1/providers/Microsoft.Synapse/workspaces/synwfasthackpt1/bigDataPools/sparkpool",
+						"id": "[parameters('Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_id')]",
 						"name": "sparkpool",
 						"type": "Spark",
-						"endpoint": "https://synwfasthackpt1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool",
+						"endpoint": "[parameters('Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_endpoint')]",
 						"auth": {
 							"type": "AAD",
 							"authResource": "https://dev.azuresynapse.net"
