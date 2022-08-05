@@ -81,12 +81,12 @@
         "AzureKeyVault": {
             "properties": {
                 "typeProperties": {
-                    "baseUrl": "|:baseUrl:secureString"
+                    "baseUrl": "="
                 },
                 "parameters": {
                     "KeyVaultURL": {
                         "type": "=",
-                        "defaultValue": "|:defaultValue:secureString"
+                        "defaultValue": "="
                     }
                 }
             }
