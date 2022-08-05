@@ -1,0 +1,27 @@
+variables:
+
+  # Global
+  ap_vm_image: windows-2019
+
+  location: eastus 
+  prefix: fasthack 
+  postfix: pt1
+  environment: dev
+  objectID: '2d5dfae5-ae9c-46c9-a4b2-e2973af76103' 
+
+
+  # Azure DevOps 
+  ado_service_connection_rg: Azure-ARM-Dev-SAPA
+
+
+  # IaC
+  baseName: $(prefix)$(postfix)$(environment)
+  resourceGroupName: rg-$(baseName)
+  storageAccountName: st$(baseName)
+  dataLakeAccountName: adl$(baseName)
+  sqlServerName: sqlsvr$(baseName)
+  databaseName: sampledb
+  synapseWorkspace: synw$(baseName)
+  synapsedatalakegen2name: adlsyn$(baseName)
+
+

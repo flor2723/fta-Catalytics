@@ -1,0 +1,30 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+
+variables:
+    # 'develop' or feature branches: DEV environment
+    - template: ../../config-infra-dev.yml
+
+trigger:
+- none
+
+pool:
+  vmImage: $(ap_vm_image)
+
+stages :
+  - stage: Test1
+    displayName: Test 1
+    jobs:
+    - job: test1
+      displayName: synapse deployment
+      steps:
+      - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
+        displayName: 'Synapse deployment task for workspace: synwfasthackpt1dev'
+        inputs:
+          TemplateFile: '$(System.DefaultWorkingDirectory)/_Azure_fta-Catalytics/synwfasthackpt1/TemplateForWorkspace.json'
+          ParametersFile: '$(System.DefaultWorkingDirectory)/_Azure_fta-Catalytics/synwfasthackpt1/TemplateParametersForWorkspace.json'
+          azureSubscription: 'Azure-ARM-Dev-SAPA'
+          ResourceGroupName: $(resourceGroupName)
+          TargetWorkspaceName: $(synapseWorkspace)
+          OverrideArmParameters: '-workspaceName "synwfasthackpt1dev" -LS_ADLS_G2_properties_typeProperties_url "https://adlfasthackpt1dev.dfs.core.windows.net" -LS_AKV_properties_typeProperties_baseUrl "https://akvfasthackpt1dev.vault.azure.net" -LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint "https://stfasthackpt1dev.blob.core.windows.net" -Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_id "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1dev/providers/Microsoft.Synapse/workspaces/synwfasthackpt1dev/bigDataPools/sparkpool" -Raw_To_Curated_Full_Load_properties_metadata_a365ComputeOptions_endpoint "https://synwfasthackpt1dev.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool" -Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_id "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/rg-fasthackpt1dev/providers/Microsoft.Synapse/workspaces/synwfasthackpt1dev/bigDataPools/sparkpool" -Raw_To_Curated_Incremental_Load_properties_metadata_a365ComputeOptions_endpoint "https://synwfasthackpt1dev.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkpool"'
