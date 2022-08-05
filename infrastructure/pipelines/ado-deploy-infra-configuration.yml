@@ -11,10 +11,11 @@ trigger:
 
 resources:
   repositories:
-  - repository: fta-Catalytics
-    type: git
-    name: fta-Catalytics
+  - repository: "fta-Catalytics-workspace-publish"
+    type: github
+    name: "Azure/fta-Catalytics"
     ref: workspace_publish
+    endpoint: Azure
 
 pool:
   vmImage: $(ap_vm_image)
@@ -26,6 +27,7 @@ stages :
     - job: test1
       displayName: synapse deployment
       steps:
+      - checkout: fta-Catalytics-workspace-publish
       - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
         displayName: 'Synapse deployment task for workspace: synwfasthackpt1dev'
         inputs:
