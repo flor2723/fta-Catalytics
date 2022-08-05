@@ -67,7 +67,8 @@
                     "accountName": "=",
                     "username": "=",
                     "connectionString": "|:-connectionString:secureString",
-                    "secretAccessKey": "|"
+                    "secretAccessKey": "|",
+                    "url": "="
                 }
             }
         },
