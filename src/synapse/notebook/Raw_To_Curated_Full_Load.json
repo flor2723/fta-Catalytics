@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "9267678b-933e-4d81-a89d-0db061f8c764"
+				"spark.autotune.trackingId": "adaf2823-b0b7-4522-9573-3f3b565b6e21"
 			}
 		},
 		"metadata": {
@@ -59,7 +59,7 @@
 					"date = \"2022-03-29\"\r\n",
 					"schema_name = \"SalesLT\"\r\n",
 					"table_name = \"Address\"\r\n",
-					"datalakeName = \"opnhckadlstorage\"\r\n",
+					"datalakeName = \"opnhckadlstorage1\"\r\n",
 					"####"
 				],
 				"execution_count": 1
