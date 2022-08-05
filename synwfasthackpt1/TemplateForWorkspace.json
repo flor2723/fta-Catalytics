@@ -11,25 +11,44 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'synwfasthackpt1-WorkspaceDefaultSqlServer'"
 		},
-		"LS_ADLS_G2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlfasthackpt1.dfs.core.windows.net/"
-		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://akvfasthackpt1.vault.azure.net/"
-		},
-		"LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint": {
-			"type": "string",
-			"defaultValue": "https://stfasthackpt1.blob.core.windows.net/"
+			"type": "secureString",
+			"metadata": "Secure string for 'baseUrl' of 'LS_AKV'"
 		},
 		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "sqlconn-sampledb"
 		},
-		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
+		"AutoResolveIntegrationRuntime_properties_typeProperties_computeProperties": {
+			"type": "object",
+			"defaultValue": {
+				"location": "AutoResolve",
+				"dataFlowProperties": {
+					"computeType": "General",
+					"coreCount": 8,
+					"timeToLive": 0
+				}
+			}
+		},
+		"created_view_serverless_properties_content_currentConnection_databaseName": {
+			"type": "string"
+		},
+		"created_view_serverless_properties_content_currentConnection_poolName": {
+			"type": "string"
+		},
+		"misc_properties_content_currentConnection_databaseName": {
+			"type": "string"
+		},
+		"misc_properties_content_currentConnection_poolName": {
+			"type": "string"
+		},
+		"Raw_To_Curated_Full_Load_properties_bigDataPool_referenceName": {
 			"type": "string",
-			"defaultValue": "https://adlsynfasthackpt1.dfs.core.windows.net"
+			"defaultValue": "sparkpool"
+		},
+		"Raw_To_Curated_Incremental_Load_properties_bigDataPool_referenceName": {
+			"type": "string",
+			"defaultValue": "sparkpool"
 		}
 	},
 	"variables": {
@@ -1129,7 +1148,7 @@
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('LS_ADLS_G2_properties_typeProperties_url')]"
+					"url": "https://adlfasthackpt1.dfs.core.windows.net/"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -1161,7 +1180,7 @@
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"serviceEndpoint": "[parameters('LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint')]"
+					"serviceEndpoint": "https://stfasthackpt1.blob.core.windows.net/"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -1231,7 +1250,7 @@
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url')]"
+					"url": "https://adlsynfasthackpt1.dfs.core.windows.net"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -1249,14 +1268,7 @@
 			"properties": {
 				"type": "Managed",
 				"typeProperties": {
-					"computeProperties": {
-						"location": "AutoResolve",
-						"dataFlowProperties": {
-							"computeType": "General",
-							"coreCount": 8,
-							"timeToLive": 0
-						}
-					}
+					"computeProperties": "[parameters('AutoResolveIntegrationRuntime_properties_typeProperties_computeProperties')]"
 				}
 			},
 			"dependsOn": []
@@ -1282,8 +1294,8 @@
 						"language": "sql"
 					},
 					"currentConnection": {
-						"databaseName": "curated_svrlss",
-						"poolName": "Built-in"
+						"databaseName": "[parameters('created_view_serverless_properties_content_currentConnection_databaseName')]",
+						"poolName": "[parameters('created_view_serverless_properties_content_currentConnection_poolName')]"
 					},
 					"resultLimit": 5000
 				},
@@ -1302,8 +1314,8 @@
 						"language": "sql"
 					},
 					"currentConnection": {
-						"databaseName": "master",
-						"poolName": "Built-in"
+						"databaseName": "[parameters('misc_properties_content_currentConnection_databaseName')]",
+						"poolName": "[parameters('misc_properties_content_currentConnection_poolName')]"
 					},
 					"resultLimit": 5000
 				},
@@ -1319,7 +1331,7 @@
 				"nbformat": 4,
 				"nbformat_minor": 2,
 				"bigDataPool": {
-					"referenceName": "sparkpool",
+					"referenceName": "[parameters('Raw_To_Curated_Full_Load_properties_bigDataPool_referenceName')]",
 					"type": "BigDataPoolReference"
 				},
 				"sessionProperties": {
@@ -1332,7 +1344,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "95c301e9-0fcf-4694-8d4d-841a90d673b6"
+						"spark.autotune.trackingId": "8cfc9799-9bbb-40ba-ba18-40ce6795fd0a"
 					}
 				},
 				"metadata": {
@@ -1357,7 +1369,8 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -1373,7 +1386,8 @@
 							"date = \"2022-03-29\"\r\n",
 							"schema_name = \"SalesLT\"\r\n",
 							"table_name = \"Address\"\r\n",
-							"datalakeName = \"opnhckadlstorage\""
+							"datalakeName = \"opnhckadlstorage\"\r\n",
+							"##"
 						],
 						"outputs": [],
 						"execution_count": 1
@@ -1661,7 +1675,7 @@
 				"nbformat": 4,
 				"nbformat_minor": 2,
 				"bigDataPool": {
-					"referenceName": "sparkpool",
+					"referenceName": "[parameters('Raw_To_Curated_Incremental_Load_properties_bigDataPool_referenceName')]",
 					"type": "BigDataPoolReference"
 				},
 				"sessionProperties": {

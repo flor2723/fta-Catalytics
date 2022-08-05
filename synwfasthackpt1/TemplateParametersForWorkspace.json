@@ -8,20 +8,39 @@
 		"synwfasthackpt1-WorkspaceDefaultSqlServer_connectionString": {
 			"value": ""
 		},
-		"LS_ADLS_G2_properties_typeProperties_url": {
-			"value": "https://adlfasthackpt1.dfs.core.windows.net/"
-		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
-			"value": "https://akvfasthackpt1.vault.azure.net/"
-		},
-		"LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint": {
-			"value": "https://stfasthackpt1.blob.core.windows.net/"
+			"value": ""
 		},
 		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
 			"value": "sqlconn-sampledb"
 		},
-		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"value": "https://adlsynfasthackpt1.dfs.core.windows.net"
+		"AutoResolveIntegrationRuntime_properties_typeProperties_computeProperties": {
+			"value": {
+				"location": "AutoResolve",
+				"dataFlowProperties": {
+					"computeType": "General",
+					"coreCount": 8,
+					"timeToLive": 0
+				}
+			}
+		},
+		"created_view_serverless_properties_content_currentConnection_databaseName": {
+			"value": ""
+		},
+		"created_view_serverless_properties_content_currentConnection_poolName": {
+			"value": ""
+		},
+		"misc_properties_content_currentConnection_databaseName": {
+			"value": ""
+		},
+		"misc_properties_content_currentConnection_poolName": {
+			"value": ""
+		},
+		"Raw_To_Curated_Full_Load_properties_bigDataPool_referenceName": {
+			"value": "sparkpool"
+		},
+		"Raw_To_Curated_Incremental_Load_properties_bigDataPool_referenceName": {
+			"value": "sparkpool"
 		}
 	}
 }
