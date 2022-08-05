@@ -30,10 +30,6 @@
 		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsynfasthackpt1.dfs.core.windows.net"
-		},
-		"trigger_StreamAnalyticsOutput_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/openhack_data_analytics/providers/Microsoft.Storage/storageAccounts/opnhckstorage"
 		}
 	},
 	"variables": {
@@ -1247,26 +1243,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/trigger_StreamAnalyticsOutput')]",
-			"type": "Microsoft.Synapse/workspaces/triggers",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/streamanalyticsoutput/blobs/",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trigger_StreamAnalyticsOutput_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/AutoResolveIntegrationRuntime')]",
 			"type": "Microsoft.Synapse/workspaces/integrationRuntimes",
 			"apiVersion": "2019-06-01-preview",
@@ -1356,7 +1332,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "492fa698-4ec9-4823-a9b7-32ad1ce5aa8a"
+						"spark.autotune.trackingId": "95c301e9-0fcf-4694-8d4d-841a90d673b6"
 					}
 				},
 				"metadata": {
@@ -1381,8 +1357,7 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -1699,7 +1674,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "fbe2e236-fdfc-4102-bd5d-47b5774cb6fc"
+						"spark.autotune.trackingId": "f2ccde07-6950-4748-bf2d-e2a33046936a"
 					}
 				},
 				"metadata": {
@@ -1724,8 +1699,7 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},

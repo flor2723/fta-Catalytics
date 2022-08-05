@@ -22,9 +22,6 @@
 		},
 		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://adlsynfasthackpt1.dfs.core.windows.net"
-		},
-		"trigger_StreamAnalyticsOutput_properties_typeProperties_scope": {
-			"value": "/subscriptions/89c37dd8-94bb-4870-98e0-1cfb98c0262e/resourceGroups/openhack_data_analytics/providers/Microsoft.Storage/storageAccounts/opnhckstorage"
 		}
 	}
 }
