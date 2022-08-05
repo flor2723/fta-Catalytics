@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'synwfasthackpt1-WorkspaceDefaultSqlServer'"
 		},
+		"PL_master_pipeline_properties_parameters_datalakeName_defaultValue": {
+			"type": "string",
+			"defaultValue": "adlfasthackpt11"
+		},
 		"LS_ADLS_G2_properties_typeProperties_url": {
 			"type": "string"
 		},
@@ -477,7 +481,7 @@
 					},
 					"datalakeName": {
 						"type": "string",
-						"defaultValue": "adlfasthackpt1"
+						"defaultValue": "[parameters('PL_master_pipeline_properties_parameters_datalakeName_defaultValue')]"
 					}
 				},
 				"annotations": []

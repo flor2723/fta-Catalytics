@@ -8,6 +8,9 @@
 		"synwfasthackpt1-WorkspaceDefaultSqlServer_connectionString": {
 			"value": ""
 		},
+		"PL_master_pipeline_properties_parameters_datalakeName_defaultValue": {
+			"value": "adlfasthackpt11"
+		},
 		"LS_ADLS_G2_properties_typeProperties_url": {
 			"value": ""
 		},
