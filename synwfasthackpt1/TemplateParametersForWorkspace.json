@@ -9,7 +9,7 @@
 			"value": ""
 		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
-			"value": ""
+			"value": "https://akvfasthackpt1.vault.azure.net/"
 		},
 		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
 			"value": "sqlconn-sampledb"

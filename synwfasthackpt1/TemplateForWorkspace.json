@@ -12,8 +12,8 @@
 			"metadata": "Secure string for 'connectionString' of 'synwfasthackpt1-WorkspaceDefaultSqlServer'"
 		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
-			"type": "secureString",
-			"metadata": "Secure string for 'baseUrl' of 'LS_AKV'"
+			"type": "string",
+			"defaultValue": "https://akvfasthackpt1.vault.azure.net/"
 		},
 		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
@@ -1308,7 +1308,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "13d996cb-c66e-4543-83d7-55727002c308"
+						"spark.autotune.trackingId": "72c2209a-371e-4925-9bcb-79c30d0a2908"
 					}
 				},
 				"metadata": {
@@ -1351,7 +1351,7 @@
 							"schema_name = \"SalesLT\"\r\n",
 							"table_name = \"Address\"\r\n",
 							"datalakeName = \"opnhckadlstorage\"\r\n",
-							"###"
+							"####"
 						],
 						"outputs": [],
 						"execution_count": 1
