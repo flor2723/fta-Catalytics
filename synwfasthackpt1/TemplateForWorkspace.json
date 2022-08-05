@@ -20,9 +20,11 @@
 		"LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint": {
 			"type": "string"
 		},
-		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "sqlconn-sampledb"
+		"LS_sqldb_properties_typeProperties_connectionString": {
+			"type": "object"
+		},
+		"synwfasthackpt1-WorkspaceDefaultSqlServer_properties_typeProperties_connectionString": {
+			"type": "string"
 		},
 		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string"
@@ -474,7 +476,8 @@
 						"type": "string"
 					},
 					"datalakeName": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "adlfasthackpt1"
 					}
 				},
 				"annotations": []
@@ -1213,14 +1216,7 @@
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AKV",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('LS_sqldb_properties_typeProperties_connectionString_secretName')]"
-					}
+					"connectionString": "[parameters('LS_sqldb_properties_typeProperties_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -1245,7 +1241,10 @@
 				"annotations": [],
 				"type": "AzureSqlDW",
 				"typeProperties": {
-					"connectionString": "[parameters('synwfasthackpt1-WorkspaceDefaultSqlServer_connectionString')]"
+					"connectionString": {
+						"type": "SecureString",
+						"value": "[parameters('synwfasthackpt1-WorkspaceDefaultSqlServer_properties_typeProperties_connectionString')]"
+					}
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -1318,7 +1317,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "199dd15a-fd14-42be-a8e7-a0d50143c226"
+						"spark.autotune.trackingId": "adaf2823-b0b7-4522-9573-3f3b565b6e21"
 					}
 				},
 				"metadata": {
@@ -1343,8 +1342,7 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},

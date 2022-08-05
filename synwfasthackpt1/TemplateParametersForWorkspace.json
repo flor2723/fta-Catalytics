@@ -17,8 +17,11 @@
 		"LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint": {
 			"value": ""
 		},
-		"LS_sqldb_properties_typeProperties_connectionString_secretName": {
-			"value": "sqlconn-sampledb"
+		"LS_sqldb_properties_typeProperties_connectionString": {
+			"value": ""
+		},
+		"synwfasthackpt1-WorkspaceDefaultSqlServer_properties_typeProperties_connectionString": {
+			"value": ""
 		},
 		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": ""
