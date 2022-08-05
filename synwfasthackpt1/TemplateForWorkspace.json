@@ -1149,6 +1149,7 @@
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"description": "this is the linked service to connect to raw and curated zone",
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
@@ -1308,7 +1309,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "72c2209a-371e-4925-9bcb-79c30d0a2908"
+						"spark.autotune.trackingId": "d482bcc0-e410-4e23-acc3-b778b6bf57d1"
 					}
 				},
 				"metadata": {
