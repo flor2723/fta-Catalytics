@@ -38,7 +38,12 @@
                         }
                     ]
                 }
-            }]
+            }],
+            "parameters": {
+                "datalakeName": {
+                    "defaultValue":"="
+                }
+            }
         }
     },
     "Microsoft.Synapse/workspaces/integrationRuntimes": {
