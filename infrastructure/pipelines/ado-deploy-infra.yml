@@ -113,7 +113,7 @@ stages :
                     
                     # Run the Scripts
                     Invoke-SqlCmd -ConnectionString $sqldbConnString  -InputFile $scriptPath
-                  azurePowerShellVersion: LatestVersion
+                azurePowerShellVersion: LatestVersion
 
 
   - stage: SynapseArtifactsDeployment
