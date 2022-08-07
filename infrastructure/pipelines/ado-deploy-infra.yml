@@ -62,7 +62,7 @@ stages :
     displayName: Deploy Azure Resources
     jobs:
     - deployment: DevDeployBicep
-      displayName: Deploy Bicep
+      displayName: Deploy Infra
       pool:
         vmImage: $(ap_vm_image)
       environment: $(environment)

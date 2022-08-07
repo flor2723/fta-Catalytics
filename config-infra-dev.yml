@@ -27,6 +27,6 @@ variables:
   databaseName: sampledb
   synapseWorkspace: synw$(baseName)
   synapsedatalakegen2name: adlsyn$(baseName)
-  keyVaultName: akv${baseName}
+  keyVaultName: akv$(baseName)
 
 
