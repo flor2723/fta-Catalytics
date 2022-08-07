@@ -4,6 +4,7 @@
 ## Prerequisites
 
 * An active Azure subscription.
+* An active DevOps account to use the Azure pipelines to deploy the resources.
 * No **Azure Policies** preventing creation of **Storage accounts** or **Event Hub** namespaces. Azure Synapse will deploy a managed Storage account when it is created. 
 * 
 

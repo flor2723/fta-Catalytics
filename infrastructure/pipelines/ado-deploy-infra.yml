@@ -92,14 +92,15 @@ stages :
                 azureSubscription: $(ado_service_connection_rg)
                 ScriptType: InlineScript
                 Inline: |
-                    $keyVaultname=$(keyVaultName) 
+                    $keyVaultname="$(keyVaultName)"
                     $keyVaultSecretnameSqlConnString="sqlconn-sampledb"
-                    $scriptPath=$(System.DefaultWorkingDirectory)/src/sql_scripts/PostDeployment/create_metadata_tables.sql
+                    $scriptPath="$(System.DefaultWorkingDirectory)/src/sql_scripts/PostDeployment/create_metadata_tables.sql"
                     # Installing the SQLServer Module
                     
                     if (!(Get-Module -Name SQLServer)){
                         Write-Output "Installing the SQL Server Module"
                         Install-Module -Name SQLServer
+                        Write-Output "Importing the SQL Server Module"
                         Import-Module SQLServer
                     }
                     
@@ -109,9 +110,11 @@ stages :
                     
                     
                     # Get the secret of the sql server Module
+                    Write-Output "Fetching the key vault secret"
                     $sqldbConnString = Get-AzKeyVaultSecret -VaultName $keyVaultname -Name $keyVaultSecretnameSqlConnStringb -AsPlainText
                     
                     # Run the Scripts
+                    Write-Output "Running the SQL Metadata creation script"
                     Invoke-SqlCmd -ConnectionString $sqldbConnString  -InputFile $scriptPath
                 azurePowerShellVersion: LatestVersion
 
