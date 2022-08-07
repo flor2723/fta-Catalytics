@@ -22,7 +22,7 @@ resources:
     type: github
     name: $(gihub_repo_name)
     ref: workspace_publish
-    endpoint: $(gihub_service_connecton)
+    endpoint: $(github_service_connecton)
 
 stages :
   - stage: Lint
@@ -84,8 +84,6 @@ stages :
                     --template-file ./infrastructure/main.bicep \
                     --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
-
-            steps:
             - task: AzurePowerShell@5
               displayName: 'Azure PowerShell script: Deploy SQL Metadata'
               inputs:
