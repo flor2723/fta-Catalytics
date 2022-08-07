@@ -5,11 +5,12 @@
 
 * An active Azure subscription.
 * An active DevOps account to use the Azure pipelines to deploy the resources.
-* No **Azure Policies** preventing creation of **Storage accounts** or **Event Hub** namespaces. Azure Synapse will deploy a managed Storage account when it is created. 
-* 
+* Service Principal has to be created and should be given Owner access over subscription, so that it can create new resource group and resources during the deployment. 
+If "Owner" access can't be given, then assign it to a custom role which has access to the following:
 
-
-
+  Microsoft.Authorization/roleAssignments/
+* [create a service connection]() from the Azure DevOps to 
+  
 
 > This repo has been populated by an initial template to help get you started. Please
 > make sure to update the content to build a great experience for community-building.

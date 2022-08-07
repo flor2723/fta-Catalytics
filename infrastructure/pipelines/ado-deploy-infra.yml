@@ -78,13 +78,13 @@ stages :
                 scriptType: bash
                 scriptLocation: inlineScript
                 inlineScript: |
-                  # az --version
-                  # echo "deploying bicep..."
-                  # az deployment sub create \
-                  #   --name $(Build.DefinitionName) \
-                  #   --location $(location) \
-                  #   --template-file ./infrastructure/main.bicep \
-                  #   --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
+                  az --version
+                  echo "deploying bicep..."
+                  az deployment sub create \
+                    --name $(Build.DefinitionName) \
+                    --location $(location) \
+                    --template-file ./infrastructure/main.bicep \
+                    --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
             - task: AzurePowerShell@5
               displayName: 'Azure PowerShell script: Deploy SQL Metadata'
