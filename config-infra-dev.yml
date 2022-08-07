@@ -12,7 +12,11 @@ variables:
 
   # Azure DevOps 
   ado_service_connection_rg: Azure-ARM-Dev-SAPA
+  gihub_service_connecton: Azure
 
+  # github
+
+  gihub_repo_name: "Azure/fta-Catalytics"
 
   # IaC
   baseName: $(prefix)$(postfix)$(environment)

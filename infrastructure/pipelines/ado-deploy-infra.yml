@@ -20,9 +20,9 @@ resources:
   repositories:
   - repository: "fta-Catalytics-workspace-publish"
     type: github
-    name: "Azure/fta-Catalytics"
+    name: $(gihub_repo_name)
     ref: workspace_publish
-    endpoint: Azure
+    endpoint: $(gihub_service_connecton)
 
 stages :
   - stage: Lint
@@ -56,8 +56,8 @@ stages :
                 --location $(location) \
                 --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
-  - stage: CheckOutBicepAndDeploy
-    displayName: Deploy AML Workspace
+  - stage: CheckOutBicepAndDeployAzureResources
+    displayName: Deploy Azure Resources
     jobs:
     - deployment: DevDeployBicep
       displayName: Deploy Bicep
