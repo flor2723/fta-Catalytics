@@ -5,6 +5,10 @@ parameters:
 - name: sqlserveradminpassword
   type: string
 
+ - name: github_service_connecton 
+  type: string
+  default: Azure
+
 
 variables:
     # 'develop' or feature branches: DEV environment
