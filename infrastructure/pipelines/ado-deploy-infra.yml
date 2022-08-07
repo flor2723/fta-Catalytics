@@ -111,7 +111,7 @@ stages :
                     
                     # Get the secret of the sql server Module
                     Write-Output "Fetching the key vault secret"
-                    $sqldbConnString = Get-AzKeyVaultSecret -VaultName $keyVaultname -Name $keyVaultSecretnameSqlConnStringb -AsPlainText
+                    $sqldbConnString = Get-AzKeyVaultSecret -VaultName $keyVaultname -Name $keyVaultSecretnameSqlConnString -AsPlainText
                     
                     # Run the Scripts
                     Write-Output "Running the SQL Metadata creation script"
