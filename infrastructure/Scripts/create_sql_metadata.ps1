@@ -8,8 +8,8 @@
 
 if (!(Get-Module -Name SQLServer)){
     Write-Output "Installing the SQL Server Module"
-    Install-Module -Name SQLServer
-    Import-Module SQLServer
+    Install-Module "SQLServer"
+    Import-Module "SQLServer"
 }
 
 else{

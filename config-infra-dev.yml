@@ -12,7 +12,7 @@ variables:
 
   # Azure DevOps 
   ado_service_connection_rg: Azure-ARM-Dev-SAPA
-  github_service_connecton: "Azure"
+
 
   # github
 

@@ -5,9 +5,7 @@ parameters:
 - name: sqlserveradminpassword
   type: string
 
-- name: github_service_connecton 
-  type: string
-  default: Azure
+
 
 
 variables:
@@ -26,7 +24,7 @@ resources:
     type: github
     name: $(gihub_repo_name)
     ref: workspace_publish
-    endpoint: ${{ parameters.github_service_connecton }}
+    endpoint: Azure   #provide the service connection name that connects to the github repo.
 
 stages :
   - stage: Lint
