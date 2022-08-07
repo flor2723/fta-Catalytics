@@ -84,6 +84,16 @@ stages :
                     --template-file ./infrastructure/main.bicep \
                     --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
+
+            steps:
+            - task: AzurePowerShell@5
+              displayName: 'Azure PowerShell script: Deploy SQL Metadata'
+              inputs:
+                azureSubscription: $(ado_service_connection_rg)
+                ScriptPath: '$(System.DefaultWorkingDirectory)/infrastructure/Scripts/create_sql_metadata.ps1 '
+                ScriptArguments: '-keyVaultname "akvfasthackpt1dev" -keyVaultSecretnameSqlConnString "sqlconn-sampledb" -scriptPath $(System.DefaultWorkingDirectory)/src/sql_scripts/PostDeployment/create_metadata_tables.sql'
+                azurePowerShellVersion: LatestVersion
+
   - stage: SynapseArtifactsDeployment
     displayName: Synapse pipelines/notebook/linkedservices/dataset deployment
     jobs:
