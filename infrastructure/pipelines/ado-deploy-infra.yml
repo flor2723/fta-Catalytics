@@ -5,7 +5,7 @@ parameters:
 - name: sqlserveradminpassword
   type: string
 
- - name: github_service_connecton 
+- name: github_service_connecton 
   type: string
   default: Azure
 
