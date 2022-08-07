@@ -20,9 +20,9 @@ resources:
   repositories:
   - repository: "fta-Catalytics-workspace-publish"
     type: github
-    name: "Azure/fta-Catalytics"
+    name: $(gihub_repo_name)
     ref: workspace_publish
-    endpoint: Azure
+    endpoint: $(gihub_service_connecton)
 
 stages :
   - stage: Lint
@@ -56,8 +56,8 @@ stages :
                 --location $(location) \
                 --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
-  - stage: CheckOutBicepAndDeploy
-    displayName: Deploy AML Workspace
+  - stage: CheckOutBicepAndDeployAzureResources
+    displayName: Deploy Azure Resources
     jobs:
     - deployment: DevDeployBicep
       displayName: Deploy Bicep
@@ -83,6 +83,14 @@ stages :
                     --location $(location) \
                     --template-file ./infrastructure/main.bicep \
                     --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
+
+            - task: AzurePowerShell@5
+              displayName: 'Azure PowerShell script: Deploy SQL Metadata'
+              inputs:
+                azureSubscription: $(ado_service_connection_rg)
+                ScriptPath: '$(System.DefaultWorkingDirectory)/infrastructure/Scripts/create_sql_metadata.ps1 '
+                ScriptArguments: '-keyVaultname "akvfasthackpt1dev" -keyVaultSecretnameSqlConnString "sqlconn-sampledb" -scriptPath $(System.DefaultWorkingDirectory)/src/sql_scripts/PostDeployment/create_metadata_tables.sql'
+                azurePowerShellVersion: LatestVersion
 
   - stage: SynapseArtifactsDeployment
     displayName: Synapse pipelines/notebook/linkedservices/dataset deployment
