@@ -1,4 +1,14 @@
-# Project
+# Azure Synapse Data Lake Demo Environment
+
+
+## Prerequisites
+
+* An active Azure subscription.
+* No **Azure Policies** preventing creation of **Storage accounts** or **Event Hub** namespaces. Azure Synapse will deploy a managed Storage account when it is created. 
+* 
+
+
+
 
 > This repo has been populated by an initial template to help get you started. Please
 > make sure to update the content to build a great experience for community-building.
