@@ -84,8 +84,6 @@ stages :
                     --template-file ./infrastructure/main.bicep \
                     --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
-
-            steps:
             - task: AzurePowerShell@5
               displayName: 'Azure PowerShell script: Deploy SQL Metadata'
               inputs:
