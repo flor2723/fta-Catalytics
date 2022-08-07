@@ -26,7 +26,7 @@ resources:
     type: github
     name: $(gihub_repo_name)
     ref: workspace_publish
-    endpoint: $(github_service_connecton)
+    endpoint: Azure
 
 stages :
   - stage: Lint
