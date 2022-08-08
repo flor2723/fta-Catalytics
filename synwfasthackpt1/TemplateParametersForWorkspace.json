@@ -12,22 +12,29 @@
 			"value": "adlfasthackpt11"
 		},
 		"LS_ADLS_G2_properties_typeProperties_url": {
-			"value": ""
+			"value": "https://adlfasthackpt1.dfs.core.windows.net/"
 		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
 			"value": ""
 		},
 		"LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint": {
-			"value": ""
+			"value": "https://stfasthackpt1.blob.core.windows.net/"
 		},
 		"LS_sqldb_properties_typeProperties_connectionString": {
-			"value": ""
+			"value": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AKV",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sqlconn-sampledb"
+			}
 		},
 		"synwfasthackpt1-WorkspaceDefaultSqlServer_properties_typeProperties_connectionString": {
 			"value": ""
 		},
 		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"value": ""
+			"value": "https://adlsynfasthackpt1.dfs.core.windows.net"
 		},
 		"AutoResolveIntegrationRuntime_properties_typeProperties_computeProperties": {
 			"value": {

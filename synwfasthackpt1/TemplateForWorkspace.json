@@ -16,22 +16,33 @@
 			"defaultValue": "adlfasthackpt11"
 		},
 		"LS_ADLS_G2_properties_typeProperties_url": {
-			"type": "string"
+			"type": "string",
+			"defaultValue": "https://adlfasthackpt1.dfs.core.windows.net/"
 		},
 		"LS_AKV_properties_typeProperties_baseUrl": {
 			"type": "string"
 		},
 		"LS_Blob_Storage_Staging_properties_typeProperties_serviceEndpoint": {
-			"type": "string"
+			"type": "string",
+			"defaultValue": "https://stfasthackpt1.blob.core.windows.net/"
 		},
 		"LS_sqldb_properties_typeProperties_connectionString": {
-			"type": "object"
+			"type": "object",
+			"defaultValue": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AKV",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sqlconn-sampledb"
+			}
 		},
 		"synwfasthackpt1-WorkspaceDefaultSqlServer_properties_typeProperties_connectionString": {
 			"type": "string"
 		},
 		"synwfasthackpt1-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"type": "string"
+			"type": "string",
+			"defaultValue": "https://adlsynfasthackpt1.dfs.core.windows.net"
 		},
 		"AutoResolveIntegrationRuntime_properties_typeProperties_computeProperties": {
 			"type": "object",
@@ -1217,7 +1228,7 @@
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
-				"description": "This link service connects to the sql server sampldb  database.",
+				"description": "This link service connects to the sql server sampldb  database...",
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
