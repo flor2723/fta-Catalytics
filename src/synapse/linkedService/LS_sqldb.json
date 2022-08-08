@@ -16,6 +16,7 @@
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
 			"type": "IntegrationRuntimeReference"
-		}
+		},
+		"description": "This link service connects to the sql server sampldb  database."
 	}
 }
