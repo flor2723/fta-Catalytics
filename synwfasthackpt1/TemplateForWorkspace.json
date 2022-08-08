@@ -1217,6 +1217,7 @@
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
+				"description": "This link service connects to the sql server sampldb  database.",
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
