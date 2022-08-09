@@ -5,14 +5,14 @@ variables:
 
   location: eastus 
   prefix: fasthack 
-  postfix: pt1
+  postfix: pt2
   environment: dev
-  objectID: '2d5dfae5-ae9c-46c9-a4b2-e2973af76103' 
-
+  objectID: 'bfb89611-c0c4-4d47-a934-dcd6a960b148'
 
   # Azure DevOps 
   ado_service_connection_rg: Azure-ARM-Dev-SAPA
-
+  # github
+  gihub_repo_name: "Azure/fta-Catalytics"
 
   # IaC
   baseName: $(prefix)$(postfix)$(environment)
@@ -23,6 +23,6 @@ variables:
   databaseName: sampledb
   synapseWorkspace: synw$(baseName)
   synapsedatalakegen2name: adlsyn$(baseName)
-  keyVaultName: akv${baseName}
+  keyVaultName: akv$(baseName)
 
 
