@@ -14,13 +14,13 @@ If "Owner" access can't be given, then assign it to a custom role which has acce
 
 ## Architecture
 
-![High level architecture](.images\highlevel_architecture_diagram.jpg)
+![High level architecture](.images/highlevel_architecture_diagram.jpg)
 
 ## Resource Diagram
 
 Here are the Azure resources that are going to be deployed using the devops pipeline. 
 
-![Component Diagram](.images\Component_Diagram.jpg)
+![Component Diagram](.images/Component_Diagram.jpg)
 
 
 ## Deployment Steps
@@ -37,12 +37,12 @@ Here are the Azure resources that are going to be deployed using the devops pipe
   gihub_repo_name: "Azure/fta-Catalytics"
 
 3. Go to the Azure DevOps and map the yml file from the repo
-   ![yml_pipeline](.images\yml_pipeline.jpg)
+   ![yml_pipeline](.images/yml_pipeline.jpg)
 4. Save and Run. It would be prompting for the SQL Server password and provide the password. 
 5.  4 stages are going to executed.  
-     ![pipeline_stages](.images\pipeline_stages.jpg)
+     ![pipeline_stages](.images/pipeline_stages.jpg)
 6. Here are the resource that are going to get created post the deployment.
-![Azure_Resources](.images\Azure_Resources.jpg)
+![Azure_Resources](.images/Azure_Resources.jpg)
 
 
 ## Post Deployment
