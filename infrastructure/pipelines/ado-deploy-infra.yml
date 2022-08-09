@@ -6,6 +6,8 @@ parameters:
   type: string
 
 
+
+
 variables:
     # 'develop' or feature branches: DEV environment
     - template: ../../config-infra-dev.yml
@@ -22,7 +24,7 @@ resources:
     type: github
     name: $(gihub_repo_name)
     ref: workspace_publish
-    endpoint: $(gihub_service_connecton)
+    endpoint: Azure   #provide the service connection name that connects to the github repo.
 
 stages :
   - stage: Lint
@@ -60,7 +62,7 @@ stages :
     displayName: Deploy Azure Resources
     jobs:
     - deployment: DevDeployBicep
-      displayName: Deploy Bicep
+      displayName: Deploy Infra
       pool:
         vmImage: $(ap_vm_image)
       environment: $(environment)
@@ -88,9 +90,34 @@ stages :
               displayName: 'Azure PowerShell script: Deploy SQL Metadata'
               inputs:
                 azureSubscription: $(ado_service_connection_rg)
-                ScriptPath: '$(System.DefaultWorkingDirectory)/infrastructure/Scripts/create_sql_metadata.ps1 '
-                ScriptArguments: '-keyVaultname "akvfasthackpt1dev" -keyVaultSecretnameSqlConnString "sqlconn-sampledb" -scriptPath $(System.DefaultWorkingDirectory)/src/sql_scripts/PostDeployment/create_metadata_tables.sql'
+                ScriptType: InlineScript
+                Inline: |
+                    $keyVaultname="$(keyVaultName)"
+                    $keyVaultSecretnameSqlConnString="sqlconn-sampledb"
+                    $scriptPath="$(System.DefaultWorkingDirectory)/src/sql_scripts/PostDeployment/create_metadata_tables.sql"
+                    # Installing the SQLServer Module
+                    
+                    if (!(Get-Module -Name SQLServer)){
+                        Write-Output "Installing the SQL Server Module"
+                        Install-Module -Name SQLServer
+                        Write-Output "Importing the SQL Server Module"
+                        Import-Module SQLServer
+                    }
+                    
+                    else{
+                    Write-Output "SQL Server Module is present"
+                    }
+                    
+                    
+                    # Get the secret of the sql server Module
+                    Write-Output "Fetching the key vault secret"
+                    $sqldbConnString = Get-AzKeyVaultSecret -VaultName $keyVaultname -Name $keyVaultSecretnameSqlConnString -AsPlainText
+                    
+                    # Run the Scripts
+                    Write-Output "Running the SQL Metadata creation script"
+                    Invoke-SqlCmd -ConnectionString $sqldbConnString  -InputFile $scriptPath
                 azurePowerShellVersion: LatestVersion
+
 
   - stage: SynapseArtifactsDeployment
     displayName: Synapse pipelines/notebook/linkedservices/dataset deployment
