@@ -28,13 +28,13 @@ Here are the Azure resources that are going to be deployed using the devops pipe
 1. clone the repo: https://github.com/Azure/fta-Catalytics.git
 2. change the configuration file: ./config-infra-dev.yml
 
-  location: eastus 
-  prefix: fasthack 
-  postfix: pt2
-  environment: dev
-  objectID: '<< object ID of the service principal'
-  ado_service_connection_rg: Azure-ARM-Dev-SAPA
-  gihub_repo_name: "Azure/fta-Catalytics"
+  - location: eastus 
+  - prefix: fasthack 
+  - postfix: pt2
+  - environment: dev
+  - objectID: '<< object ID of the service principal'
+  - ado_service_connection_rg: Azure-ARM-Dev-SAPA
+  - gihub_repo_name: "Azure/fta-Catalytics"
 
 3. Go to the Azure DevOps and map the yml file from the repo
    ![yml_pipeline](.images/yml_pipeline.jpg)
