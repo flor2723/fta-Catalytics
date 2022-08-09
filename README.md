@@ -1,4 +1,4 @@
-# Azure Synapse Data Lake Demo Environment
+# Azure Synapse Data Lake Demo Environment ( Pattern 1)
 
 
 ## Prerequisites
@@ -9,18 +9,46 @@
 If "Owner" access can't be given, then assign it to a custom role which has access to the following:
 
   Microsoft.Authorization/roleAssignments/
-* [create a service connection]() from the Azure DevOps to 
-  
+* [create a Azure Resource Manager service connection](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml#create-a-service-connection) from the Azure DevOps pipeline to connect the Azure subscription. 
+* [create a github service connectoon](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml#github-service-connection) to connect to the github repo.
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+## Architecture
 
-As the maintainer of this project, please make a few updates:
+![High level architecture](.images\highlevel_architecture_diagram.jpg)
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+## Resource Diagram
+
+Here are the Azure resources that are going to be deployed using the devops pipeline. 
+
+![Component Diagram](.images\Component_Diagram.jpg)
+
+
+## Deployment Steps
+
+1. clone the repo: https://github.com/Azure/fta-Catalytics.git
+2. change the configuration file: ./config-infra-dev.yml
+
+  location: eastus 
+  prefix: fasthack 
+  postfix: pt2
+  environment: dev
+  objectID: '<< object ID of the service principal'
+  ado_service_connection_rg: Azure-ARM-Dev-SAPA
+  gihub_repo_name: "Azure/fta-Catalytics"
+
+3. Go to the Azure DevOps and map the yml file from the repo
+   ![yml_pipeline](.images\yml_pipeline.jpg)
+4. Save and Run. It would be prompting for the SQL Server password and provide the password. 
+5.  4 stages are going to executed.  
+     ![pipeline_stages](.images\pipeline_stages.jpg)
+6. Here are the resource that are going to get created post the deployment.
+![Azure_Resources](.images\Azure_Resources.jpg)
+
+
+## Post Deployment
+   1. Add your account as the synapse workspace admin. Otherwise, you will not be able to see the pipelines and the other components when you open the synapse workspace. Synapse workspace > Access Control -> add your logged in account as "Synapse Administrator"
+   2. Run the master pipleine from the Azure synapse pipeline. Provide the required parameter Date to current date "YYYY-MM-DD" format.
+   
 
 ## Contributing
 
