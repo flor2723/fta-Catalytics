@@ -196,7 +196,13 @@
 													"sparkPool": {
 														"referenceName": "sparkpool",
 														"type": "BigDataPoolReference"
-													}
+													},
+													"conf": {
+														"spark.dynamicAllocation.enabled": null,
+														"spark.dynamicAllocation.minExecutors": null,
+														"spark.dynamicAllocation.maxExecutors": null
+													},
+													"numExecutors": null
 												}
 											}
 										]
@@ -345,7 +351,13 @@
 													"sparkPool": {
 														"referenceName": "sparkpool",
 														"type": "BigDataPoolReference"
-													}
+													},
+													"conf": {
+														"spark.dynamicAllocation.enabled": null,
+														"spark.dynamicAllocation.minExecutors": null,
+														"spark.dynamicAllocation.maxExecutors": null
+													},
+													"numExecutors": null
 												}
 											}
 										]
@@ -1333,7 +1345,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "adaf2823-b0b7-4522-9573-3f3b565b6e21"
+						"spark.autotune.trackingId": "473ca116-c41b-4116-a21b-c1fce4431514"
 					}
 				},
 				"metadata": {
@@ -1358,7 +1370,8 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -1375,7 +1388,7 @@
 							"schema_name = \"SalesLT\"\r\n",
 							"table_name = \"Address\"\r\n",
 							"datalakeName = \"opnhckadlstorage1\"\r\n",
-							"####"
+							"#######"
 						],
 						"outputs": [],
 						"execution_count": 1
