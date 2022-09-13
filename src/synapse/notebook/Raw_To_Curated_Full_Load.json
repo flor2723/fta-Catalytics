@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "adaf2823-b0b7-4522-9573-3f3b565b6e21"
+				"spark.autotune.trackingId": "66318008-56de-465f-a40b-345b54ecf63d"
 			}
 		},
 		"metadata": {
@@ -60,7 +60,7 @@
 					"schema_name = \"SalesLT\"\r\n",
 					"table_name = \"Address\"\r\n",
 					"datalakeName = \"opnhckadlstorage1\"\r\n",
-					"####"
+					"#######"
 				],
 				"execution_count": 1
 			},
