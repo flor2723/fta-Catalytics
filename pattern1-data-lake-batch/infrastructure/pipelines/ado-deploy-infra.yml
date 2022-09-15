@@ -54,7 +54,7 @@ stages :
             inlineScript: |
               az deployment sub validate \
                 --name $(Build.DefinitionName) \
-                --template-file ./infrastructure/main.bicep \
+                --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
                 --location $(location) \
                 --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
