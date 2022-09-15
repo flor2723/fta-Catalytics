@@ -30,8 +30,13 @@ param tags object = {
 }
 
 var baseName  = '${prefix}${postfix}${env}'
-var resourceGroupName = 'rg-${baseName}'
-
+var resourceGroupName = 'AP4-${baseName}-RG'
+var sqlServerName = '${prefix}-sql-${postfix}-${env}'
+var synapseWorkSpaceName = '${prefix}-synapse-${postfix}-${env}'
+var dataLakeg2SynapseName = '${prefix}adlssyn${postfix}${env}'
+var storageAccountName = '${prefix}st${postfix}${env}'
+var datalakeName = '${prefix}adl${postfix}${env}'
+var keyVaultName = '${prefix}-akv-${postfix}-${env}'
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: resourceGroupName
@@ -43,11 +48,11 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 
 //sql server
 
-module sqlsvr './modules/sqlserver.bicep' = {
+module sqlsvr './modules/deploy_1_sqlserver.bicep' = {
   name: 'sqlsvr'
   scope: resourceGroup(rg.name)
   params: {
-    name: 'sqlsvr${baseName}'
+    name: sqlServerName
     location: location
     tags: tags
     administratorLogin: sqladministratorLogin
@@ -60,16 +65,16 @@ module sqlsvr './modules/sqlserver.bicep' = {
 
 // synapse workspace
 
-module synapse './modules/synapse.bicep' = {
+module synapse './modules/deploy_2_synapse.bicep' = {
   name: 'synapse'
   scope: resourceGroup(rg.name)
   params: {
-    synapseName: 'synw${baseName}'
+    synapseName: synapseWorkSpaceName
     location: location
     tags: tags
     administratorLogin: sqladministratorLogin
     administratorLoginPassword: sqladministratorLoginPassword
-    datalakegen2name: 'adlsyn${baseName}'
+    datalakegen2name: dataLakeg2SynapseName
     defaultDataLakeStorageFilesystemName: 'root'
     dataLakeUrlFormat: 'https://{0}.dfs.core.windows.net'
     sparkPoolName: 'sparkpool'
@@ -81,11 +86,11 @@ module synapse './modules/synapse.bicep' = {
 
 
 // Storage Account
-module st './modules/storage_account.bicep' = {
+module st './modules/deploy_3_storage_account.bicep' = {
   name: 'st'
   scope: resourceGroup(rg.name)
   params: {
-    name: 'st${baseName}'
+    name: storageAccountName
     location: location
     tags: tags
     roleAssignmentPrincipalID : synapse.outputs.synapsemanageidentity
@@ -99,11 +104,11 @@ module st './modules/storage_account.bicep' = {
 
 // data lake
 
-module dl './modules/datalake_account.bicep' = {
+module dl './modules/deploy_4_datalake_account.bicep' = {
   name: 'dl'
   scope: resourceGroup(rg.name)
   params: {
-    name: 'adl${baseName}'
+    name: datalakeName
     location: location
     tags: tags
     roleAssignmentPrincipalID : synapse.outputs.synapsemanageidentity
@@ -120,11 +125,11 @@ module dl './modules/datalake_account.bicep' = {
 
 // key vault  and secret creation
 
-module kv './modules/key_vault.bicep' = {
+module kv './modules/deploy_5_key_vault.bicep' = {
   name: 'kv'
   scope: resourceGroup(rg.name)
   params: {
-    name: 'akv${baseName}'
+    name: keyVaultName
     location: location
     tags: tags
     objectID: objectID
