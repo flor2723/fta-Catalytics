@@ -28,14 +28,14 @@ resources:
 
 stages :
   - stage: Lint
-    displayName: Lint and Preflight check
+    displayName: Lint and Preflight check. Details- https://docs.microsoft.com/en-us/training/modules/test-bicep-code-using-azure-pipelines/3-lint-validate-bicep-code?pivots=powershell
     jobs:
     - job: LintBicep
       displayName: Lint Bicep Code
       steps:
         - checkout: self
         - script: |
-            az bicep build --file ./infrastructure/main.bicep
+            az bicep build --file ./pattern1-data-lake-batch/infrastructure/main.bicep
           name: LintBicepCode
           displayName: Run Bicep Linter
 
@@ -54,7 +54,7 @@ stages :
             inlineScript: |
               az deployment sub validate \
                 --name $(Build.DefinitionName) \
-                --template-file ./infrastructure/main.bicep \
+                --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
                 --location $(location) \
                 --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
@@ -83,7 +83,7 @@ stages :
                   az deployment sub create \
                     --name $(Build.DefinitionName) \
                     --location $(location) \
-                    --template-file ./infrastructure/main.bicep \
+                    --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
                     --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=$(objectID) sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
             - task: AzurePowerShell@5
@@ -94,7 +94,7 @@ stages :
                 Inline: |
                     $keyVaultname="$(keyVaultName)"
                     $keyVaultSecretnameSqlConnString="sqlconn-sampledb"
-                    $scriptPath="$(System.DefaultWorkingDirectory)/src/sql_scripts/PostDeployment/create_metadata_tables.sql"
+                    $scriptPath="$(System.DefaultWorkingDirectory)/pattern1-data-lake-batch/src/sql_scripts/PostDeployment/create_metadata_tables.sql"
                     # Installing the SQLServer Module
                     
                     if (!(Get-Module -Name SQLServer)){
@@ -127,7 +127,7 @@ stages :
       steps:
       - checkout: fta-Catalytics-workspace-publish
       - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
-        displayName: 'Synapse deployment task for workspace: synwfasthackpt1dev'
+        displayName: 'Synapse deployment task for workspace: $(synapseWorkspace) '
         inputs:
           TemplateFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateForWorkspace.json'
           ParametersFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateParametersForWorkspace.json'
