@@ -1,2 +1,3 @@
 *.env
 *.pptx
+pattern2-streaming/infrastructure/Scripts/runBicepFile.cli
