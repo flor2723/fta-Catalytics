@@ -11,6 +11,9 @@
 		"LS_AKV_properties_typeProperties_baseUrl": {
 			"value": "https://fasthack-akv-pt3.vault.azure.net/"
 		},
+		"LS_AKV_1_properties_typeProperties_baseUrl": {
+			"value": "https://opnhckdaakv.vault.azure.net/"
+		},
 		"fasthack-synapse-pt3-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://fasthackadlssynpt3.dfs.core.windows.net"
 		}
