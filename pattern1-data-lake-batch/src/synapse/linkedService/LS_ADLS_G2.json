@@ -1,5 +1,6 @@
 {
 	"name": "LS_ADLS_G2",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureBlobFS",

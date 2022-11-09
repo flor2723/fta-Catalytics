@@ -18,5 +18,6 @@
 				"container": "staging"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
 }

@@ -1,5 +1,6 @@
 {
 	"name": "LS_sqldb",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureSqlDatabase",

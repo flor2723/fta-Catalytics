@@ -1,5 +1,6 @@
 {
 	"name": "LS_Blob_Storage_Staging",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureBlobStorage",

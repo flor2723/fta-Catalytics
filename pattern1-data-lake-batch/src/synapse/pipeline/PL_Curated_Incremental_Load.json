@@ -114,7 +114,13 @@
 											"sparkPool": {
 												"referenceName": "sparkpool",
 												"type": "BigDataPoolReference"
-											}
+											},
+											"conf": {
+												"spark.dynamicAllocation.enabled": null,
+												"spark.dynamicAllocation.minExecutors": null,
+												"spark.dynamicAllocation.maxExecutors": null
+											},
+											"numExecutors": null
 										}
 									}
 								]
@@ -132,6 +138,8 @@
 				"type": "string"
 			}
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2022-08-04T20:28:38Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
 }
