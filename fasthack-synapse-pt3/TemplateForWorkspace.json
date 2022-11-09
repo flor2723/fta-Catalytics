@@ -12,10 +12,6 @@
 			"metadata": "Secure string for 'connectionString' of 'fasthack-synapse-pt3-WorkspaceDefaultSqlServer'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:fasthack-synapse-pt3.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
-		"LS_AKV_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://fasthack-akv-pt3.vault.azure.net/"
-		},
 		"LS_AKV_1_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://opnhckdaakv.vault.azure.net/"
@@ -23,25 +19,16 @@
 		"fasthack-synapse-pt3-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://fasthackadlssynpt3.dfs.core.windows.net"
+		},
+		"LS_KeyVault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://fasthack-akv-pt3.vault.azure.net/"
 		}
 	},
 	"variables": {
 		"workspaceId": "[concat('Microsoft.Synapse/workspaces/', parameters('workspaceName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('workspaceName'), '/LS_AKV')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('LS_AKV_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/LS_AKV_1')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
@@ -148,7 +135,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "86d8e7f9-1a76-4d6c-bca7-bd06a5fa48c3"
+						"spark.autotune.trackingId": "3612744c-b38c-460a-b1f3-2419c25ed065"
 					}
 				},
 				"metadata": {
@@ -173,8 +160,7 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -321,6 +307,19 @@
 			},
 			"dependsOn": [],
 			"location": "eastus"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/LS_KeyVault')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('LS_KeyVault_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }
