@@ -81,6 +81,26 @@ module synapse './modules/deploy_2_synapse.bicep' = {
   }
 }
 
+
+// data lake
+
+module dl './modules/deploy_4_datalake_account.bicep' = {
+  name: 'dl'
+  scope: resourceGroup(rg.name)
+  params: {
+    name: datalakeName
+    location: location
+    tags: tags
+    roleAssignmentPrincipalID : synapse.outputs.synapsemanageidentity
+    roleAssignmnetPrincipalType : 'ServicePrincipal'
+    roleDefinitionId :  role['StorageBlobDataContributor']
+  }
+  dependsOn: [
+    synapse    
+  ]
+  
+}
+
 // key vault  and secret creation
 
 module kv './modules/deploy_3_key_vault.bicep' = {
