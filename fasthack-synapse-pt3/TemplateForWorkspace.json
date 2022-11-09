@@ -7,22 +7,26 @@
 			"metadata": "Workspace name",
 			"defaultValue": "fasthack-synapse-pt3"
 		},
+		"LS_datalake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_datalake'"
+		},
 		"fasthack-synapse-pt3-WorkspaceDefaultSqlServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'fasthack-synapse-pt3-WorkspaceDefaultSqlServer'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:fasthack-synapse-pt3.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
-		"LS_AKV_1_properties_typeProperties_baseUrl": {
+		"LS_KeyVault_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://opnhckdaakv.vault.azure.net/"
+			"defaultValue": "https://fasthack-akv-pt3.vault.azure.net/"
+		},
+		"LS_datalake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://fasthackadlpt3.dfs.core.windows.net/"
 		},
 		"fasthack-synapse-pt3-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://fasthackadlssynpt3.dfs.core.windows.net"
-		},
-		"LS_KeyVault_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://fasthack-akv-pt3.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -30,17 +34,40 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/LS_AKV_1')]",
+			"name": "[concat(parameters('workspaceName'), '/LS_KeyVault')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"annotations": [],
 				"type": "AzureKeyVault",
 				"typeProperties": {
-					"baseUrl": "[parameters('LS_AKV_1_properties_typeProperties_baseUrl')]"
+					"baseUrl": "[parameters('LS_KeyVault_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/LS_datalake')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LS_datalake_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('LS_datalake_accountKey')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/fasthack-synapse-pt3-WorkspaceDefaultSqlServer')]",
@@ -135,7 +162,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "3612744c-b38c-460a-b1f3-2419c25ed065"
+						"spark.autotune.trackingId": "d1c9eb0f-967f-484b-9ca8-be3758339892"
 					}
 				},
 				"metadata": {
@@ -160,11 +187,86 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"tags": []
+						},
+						"source": [
+							"datalake_name = \"fasthackadlpt3\""
+						],
+						"outputs": [],
+						"execution_count": 58
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							""
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"## Delcare the parameter"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"tags": [
+								"parameters"
+							]
+						},
+						"source": [
+							"datalake_name = \"fasthackadlpt3\""
+						],
+						"outputs": [],
+						"execution_count": 59
+					},
 					{
 						"cell_type": "markdown",
 						"metadata": {
@@ -194,10 +296,23 @@
 							}
 						},
 						"source": [
-							"eh_conn_str = mssparkutils.credentials.getSecretWithLS(\"LS_AKV_1\", \"connstrehsynapsestreaming\")"
+							""
 						],
 						"outputs": [],
-						"execution_count": 26
+						"execution_count": null
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							""
+						]
 					},
 					{
 						"cell_type": "code",
@@ -213,36 +328,10 @@
 							}
 						},
 						"source": [
-							"eh_conn_str = mssparkutils.credentials.getSecretWithLS(\"LS_AKV\", \"eh-conn-str\")"
+							"eh_conn_str = mssparkutils.credentials.getSecretWithLS(\"LS_KeyVault\", \"eh-conn-str\")"
 						],
 						"outputs": [],
-						"execution_count": 21
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"import sys\r\n",
-							"from pyspark.sql import SparkSession\r\n",
-							"\r\n",
-							"sc = SparkSession.builder.getOrCreate()\r\n",
-							"token_library = sc._jvm.com.microsoft.azure.synapse.tokenlibrary.TokenLibrary\r\n",
-							"\r\n",
-							"connection_string = token_library.getSecret(\"fasthack-akv-pt3\", \"eh-conn-str\", \"LS_AKV\")\r\n",
-							"print(connection_string)"
-						],
-						"outputs": [],
-						"execution_count": 18
+						"execution_count": 60
 					},
 					{
 						"cell_type": "markdown",
@@ -259,6 +348,266 @@
 							"- variable path for the checkfile location.\r\n",
 							""
 						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"\r\n",
+							"table_delta_file_location = f\"abfss://curated@{datalake_name}.dfs.core.windows.net/streaming/spark_structured_streaming_using_synapse/structured_streaming_eh\"\r\n",
+							"checkpointLocation = f\"abfss://curated@{datalake_name}.dfs.core.windows.net/streaming/spark_structured_streaming_using_synapse/_checkcpoint/structured_streaming_eh\""
+						],
+						"outputs": [],
+						"execution_count": 61
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"connectionString = eh_conn_str\r\n",
+							"ehConf = {\r\n",
+							"  'eventhubs.connectionString' : sc._jvm.org.apache.spark.eventhubs.EventHubsUtils.encrypt(connectionString)\r\n",
+							"}\r\n",
+							"def write2table(df2, epoch_id):\r\n",
+							"    df2.write.format(\"delta\").mode(\"append\").save(f\"abfss://curated@{datalake_name}.dfs.core.windows.net/streaming/spark_structured_streaming_using_synapse/structured_streaming_eh\")\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 62
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"## read stream data"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df = spark \\\r\n",
+							"    .readStream \\\r\n",
+							"    .format(\"eventhubs\") \\\r\n",
+							"    .options(**ehConf) \\\r\n",
+							"  .load()"
+						],
+						"outputs": [],
+						"execution_count": 63
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"## transformation"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df1 = df.withColumn(\"body\", df[\"body\"].cast(\"string\"))"
+						],
+						"outputs": [],
+						"execution_count": 64
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df1.cre"
+						]
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"## write down the stream data into the delta table."
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"df1.writeStream \\\r\n",
+							"    .outputMode(\"update\") \\\r\n",
+							"    .trigger(processingTime='5 seconds') \\\r\n",
+							"    .option(\"checkpointLocation\",checkpointLocation) \\\r\n",
+							"    .foreachBatch(write2table) \\\r\n",
+							"    .start() \\\r\n",
+							"    .awaitTermination()"
+						],
+						"outputs": [],
+						"execution_count": 65
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"## read the data. \r\n",
+							"- We need to stop the previous execution and run it here."
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"collapsed": false
+						},
+						"source": [
+							"df = (spark.read.format(\"delta\").load(path=f\"abfss://curated@{datalake_name}.dfs.core.windows.net/streaming/spark_structured_streaming_using_synapse/structured_streaming_eh\"))"
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"## Create the delta table.\r\n",
+							"- the below query has to run once"
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"microsoft": {
+								"language": "sparksql"
+							}
+						},
+						"source": [
+							"  %%sql\r\n",
+							"\r\n",
+							"--   CREATE DATABASE IF NOT EXISTS STREAMING;\r\n",
+							"  "
+						],
+						"outputs": [],
+						"execution_count": null
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"# df.write.format(\"delta\").mode(\"append\").save(table_delta_file_location)\r\n",
+							"# sqltext = f\"CREATE TABLE IF NOT EXISTS streaming.stream_data USING DELTA LOCATION '{table_delta_file_location}'\"\r\n",
+							"# print(sqltext)\r\n",
+							"# spark.sql(sqltext)"
+						],
+						"outputs": [],
+						"execution_count": null
 					},
 					{
 						"cell_type": "code",
@@ -307,19 +656,6 @@
 			},
 			"dependsOn": [],
 			"location": "eastus"
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/LS_KeyVault')]",
-			"type": "Microsoft.Synapse/workspaces/linkedServices",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('LS_KeyVault_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }
