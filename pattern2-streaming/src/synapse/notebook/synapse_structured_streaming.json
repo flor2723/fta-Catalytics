@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "da0bff1a-640d-4445-8d38-8f51c4542635"
+				"spark.autotune.trackingId": "2eac3da6-335f-44f8-bfe8-8195e2dda1b6"
 			}
 		},
 		"metadata": {
@@ -79,7 +79,7 @@
 				"source": [
 					"eh_conn_str = mssparkutils.credentials.getSecretWithLS(\"LS_AKV\", \"eh-conn-str\")"
 				],
-				"execution_count": 1
+				"execution_count": 6
 			},
 			{
 				"cell_type": "markdown",
