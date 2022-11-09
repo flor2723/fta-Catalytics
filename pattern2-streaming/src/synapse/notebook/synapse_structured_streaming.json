@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "2eac3da6-335f-44f8-bfe8-8195e2dda1b6"
+				"spark.autotune.trackingId": "a0db36f0-66fb-4607-84f3-849d1365ab25"
 			}
 		},
 		"metadata": {
@@ -79,7 +79,32 @@
 				"source": [
 					"eh_conn_str = mssparkutils.credentials.getSecretWithLS(\"LS_AKV\", \"eh-conn-str\")"
 				],
-				"execution_count": 6
+				"execution_count": 17
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import sys\r\n",
+					"from pyspark.sql import SparkSession\r\n",
+					"\r\n",
+					"sc = SparkSession.builder.getOrCreate()\r\n",
+					"token_library = sc._jvm.com.microsoft.azure.synapse.tokenlibrary.TokenLibrary\r\n",
+					"\r\n",
+					"connection_string = token_library.getSecret(\"fasthack-akv-pt3\", \"eh-conn-str\", \"LS_AKV\")\r\n",
+					"print(connection_string)"
+				],
+				"execution_count": 18
 			},
 			{
 				"cell_type": "markdown",
