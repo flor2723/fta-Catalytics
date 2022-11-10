@@ -100,7 +100,7 @@ stages :
     - job: _job_SynapseArtifactsDeployment
       displayName: synapse artifacts deployment
       steps:
-      - checkout: fta-Catalytics-workspace-publish
+      - checkout: fta-Catalytics-workspace-publish-streaming
       - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
         displayName: 'Synapse deployment task for workspace: $(synapseWorkspace) '
         inputs:
