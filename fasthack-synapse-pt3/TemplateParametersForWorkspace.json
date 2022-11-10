@@ -5,9 +5,6 @@
 		"workspaceName": {
 			"value": "fasthack-synapse-pt3"
 		},
-		"LS_datalake_accountKey": {
-			"value": ""
-		},
 		"fasthack-synapse-pt3-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:fasthack-synapse-pt3.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},

@@ -7,10 +7,6 @@
 			"metadata": "Workspace name",
 			"defaultValue": "fasthack-synapse-pt3"
 		},
-		"LS_datalake_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_datalake'"
-		},
 		"fasthack-synapse-pt3-WorkspaceDefaultSqlServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'fasthack-synapse-pt3-WorkspaceDefaultSqlServer'",
@@ -54,11 +50,7 @@
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('LS_datalake_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('LS_datalake_accountKey')]"
-					}
+					"url": "[parameters('LS_datalake_properties_typeProperties_url')]"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveIntegrationRuntime",
@@ -162,7 +154,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "70bc09a2-c3d3-4917-8cc1-5e3a5c9cc28b"
+						"spark.autotune.trackingId": "23fea2c3-fc87-4f98-88ec-a4f59c9b8aee"
 					}
 				},
 				"metadata": {
@@ -187,8 +179,7 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
