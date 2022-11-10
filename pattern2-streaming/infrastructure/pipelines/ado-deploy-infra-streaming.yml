@@ -1,0 +1,112 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+parameters:
+- name: sqlserveradminpassword
+  type: string
+- name: objectIDofServicePrincipal
+  type: string
+
+
+
+
+variables:
+    # 'develop' or feature branches: DEV environment
+    - template: ../../config-infra-dev-streaming.yml
+
+trigger:
+- none
+
+pool:
+  vmImage: $(ap_vm_image)
+
+resources:
+  repositories:
+  - repository: "fta-Catalytics-workspace-publish-streaming"
+    type: github
+    name: $(gihub_repo_name)
+    ref: workspace_publish_streaming
+    endpoint: Azure   #provide the service connection name that connects to the github repo.
+
+stages :
+  - stage: Lint
+    displayName: Lint and Preflight check. Details- https://docs.microsoft.com/en-us/training/modules/test-bicep-code-using-azure-pipelines/3-lint-validate-bicep-code?pivots=powershell
+    jobs:
+    - job: LintBicep
+      displayName: Lint Bicep Code
+      steps:
+        - checkout: self
+        - script: |
+            az bicep build --file ./pattern2-streaming/infrastructure/main.bicep
+          name: LintBicepCode
+          displayName: Run Bicep Linter
+
+  - stage: PreflightValidation
+    jobs:
+    - job: ValidateBicepCode
+      displayName: Validate Bicep Code
+      steps:
+        - task: AzureCli@2
+          name: RunPreflightValidateion
+          displayName: Run Preflight Validation
+          inputs:
+            azureSubscription: $(ado_service_connection_rg)
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              echo $(Build.DefinitionName)
+              echo $(location)
+              echo $(prefix)
+              echo $(postfix)
+              echo $(environment)
+              az deployment sub validate \
+                --name $(Build.DefinitionName) \
+                --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
+                --location $(location) \
+                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=${{ parameters.objectIDofServicePrincipal }}sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
+
+  - stage: CheckOutBicepAndDeployAzureResources
+    displayName: Deploy Azure Resources
+    jobs:
+    - deployment: DevDeployBicep
+      displayName: Deploy Infra
+      pool:
+        vmImage: $(ap_vm_image)
+      environment: $(environment)
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+            - task: AzureCLI@2
+              displayName: Running Dev Deployment
+              inputs:
+                azureSubscription: $(ado_service_connection_rg)
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  az --version
+                  echo "deploying bicep..."
+                  az deployment sub create \
+                    --name $(Build.DefinitionName) \
+                    --location $(location) \
+                    --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
+                    --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=${{ parameters.objectIDofServicePrincipal }} sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
+
+
+  - stage: SynapseArtifactsDeployment
+    displayName: Synapse pipelines/notebook/linkedservices/dataset deployment
+    jobs:
+    - job: _job_SynapseArtifactsDeployment
+      displayName: synapse artifacts deployment
+      steps:
+      - checkout: fta-Catalytics-workspace-publish
+      - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
+        displayName: 'Synapse deployment task for workspace: $(synapseWorkspace) '
+        inputs:
+          TemplateFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateForWorkspace.json'
+          ParametersFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateParametersForWorkspace.json'
+          azureSubscription: $(ado_service_connection_rg)
+          ResourceGroupName: $(resourceGroupName)
+          TargetWorkspaceName: $(synapseWorkspace)
+          OverrideArmParameters: '-workspaceName $(synapseWorkspace)            -LS_datalake_properties_typeProperties_url "https://$(dataLakeAccountName).dfs.core.windows.net"           -LS_KeyVault_properties_typeProperties_baseUrl "https://$(keyVaultName).vault.azure.net"

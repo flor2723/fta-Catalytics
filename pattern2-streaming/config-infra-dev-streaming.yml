@@ -1,0 +1,25 @@
+variables:
+
+  # Global
+  ap_vm_image: windows-2019
+
+  location: eastus 
+  prefix: fasthack 
+  postfix: pt31
+  environment: dev
+
+
+  # Azure DevOps 
+  ado_service_connection_rg: Azure-ARM-Dev-SAPA
+  # github
+  gihub_repo_name: "Azure/fta-Catalytics"
+
+  # IaC
+  baseName: $(prefix)$(postfix)$(environment)
+  resourceGroupName: SP3-$(baseName)-RG
+  dataLakeAccountName: $(prefix)adl$(postfix)$(environment)
+  synapseWorkspace: $(prefix)-synapse-$(postfix)$(environment)
+  synapsedatalakegen2name: $(prefix)adlssyn$(postfix)$(environment)
+  keyVaultName: $(prefix)-akv-$(postfix)$(environment)
+  eventHubNamespacename: '$(prefix)ehns$(postfix)$(env)'
+

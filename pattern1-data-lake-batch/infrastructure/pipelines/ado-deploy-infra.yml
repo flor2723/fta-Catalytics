@@ -52,6 +52,12 @@ stages :
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
+              echo $(Build.DefinitionName)
+              echo $(location)
+              echo $(prefix)
+              echo $(postfix)
+              echo $(environment)
+              echo $(objectID)
               az deployment sub validate \
                 --name $(Build.DefinitionName) \
                 --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
