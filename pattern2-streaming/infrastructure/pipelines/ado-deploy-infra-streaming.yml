@@ -109,4 +109,4 @@ stages :
           azureSubscription: $(ado_service_connection_rg)
           ResourceGroupName: $(resourceGroupName)
           TargetWorkspaceName: $(synapseWorkspace)
-          OverrideArmParameters: '-workspaceName $(synapseWorkspace)            -LS_datalake_properties_typeProperties_url "https://$(dataLakeAccountName).dfs.core.windows.net"           -LS_KeyVault_properties_typeProperties_baseUrl "https://$(keyVaultName).vault.azure.net"
+          OverrideArmParameters: '-workspaceName $(synapseWorkspace)            -LS_datalake_properties_typeProperties_url "https://$(dataLakeAccountName).dfs.core.windows.net"           -LS_KeyVault_properties_typeProperties_baseUrl "https://$(keyVaultName).vault.azure.net"'
