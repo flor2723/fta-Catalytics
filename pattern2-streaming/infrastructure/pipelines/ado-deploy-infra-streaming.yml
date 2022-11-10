@@ -61,7 +61,7 @@ stages :
               echo $(environment)
               az deployment sub validate \
                 --name $(Build.DefinitionName) \
-                --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
+                --template-file ./pattern2-streaming/infrastructure/main.bicep \
                 --location $(location) \
                 --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=${{ parameters.objectIDofServicePrincipal }} sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
@@ -90,7 +90,7 @@ stages :
                   az deployment sub create \
                     --name $(Build.DefinitionName) \
                     --location $(location) \
-                    --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
+                    --template-file ./pattern2-streaming/infrastructure/main.bicep \
                     --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=${{ parameters.objectIDofServicePrincipal }} sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
 
