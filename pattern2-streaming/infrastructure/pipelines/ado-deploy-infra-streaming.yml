@@ -104,8 +104,8 @@ stages :
       - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
         displayName: 'Synapse deployment task for workspace: $(synapseWorkspace) '
         inputs:
-          TemplateFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateForWorkspace.json'
-          ParametersFile: '$(System.DefaultWorkingDirectory)/synwfasthackpt1/TemplateParametersForWorkspace.json'
+          TemplateFile: '$(System.DefaultWorkingDirectory)/fasthack-synapse-pt3/TemplateForWorkspace.json'
+          ParametersFile: '$(System.DefaultWorkingDirectory)/fasthack-synapse-pt3/TemplateParametersForWorkspace.json'
           azureSubscription: $(ado_service_connection_rg)
           ResourceGroupName: $(resourceGroupName)
           TargetWorkspaceName: $(synapseWorkspace)
