@@ -1,5 +1,5 @@
 {
-	"name": "LS_AKV",
+	"name": "LS_KeyVault",
 	"properties": {
 		"annotations": [],
 		"type": "AzureKeyVault",
