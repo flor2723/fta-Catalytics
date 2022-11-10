@@ -162,7 +162,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "d1c9eb0f-967f-484b-9ca8-be3758339892"
+						"spark.autotune.trackingId": "70bc09a2-c3d3-4917-8cc1-5e3a5c9cc28b"
 					}
 				},
 				"metadata": {
@@ -193,26 +193,6 @@
 					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							},
-							"tags": []
-						},
-						"source": [
-							"datalake_name = \"fasthackadlpt3\""
-						],
-						"outputs": [],
-						"execution_count": 58
-					},
 					{
 						"cell_type": "code",
 						"metadata": {
@@ -265,7 +245,7 @@
 							"datalake_name = \"fasthackadlpt3\""
 						],
 						"outputs": [],
-						"execution_count": 59
+						"execution_count": 1
 					},
 					{
 						"cell_type": "markdown",
@@ -559,7 +539,8 @@
 						},
 						"source": [
 							"## Create the delta table.\r\n",
-							"- the below query has to run once"
+							"- The query is needed to be executed only once. This is just to create the delta table.\r\n",
+							"- We can run this once the streaming has started writing the data into delta lake physical location."
 						]
 					},
 					{
