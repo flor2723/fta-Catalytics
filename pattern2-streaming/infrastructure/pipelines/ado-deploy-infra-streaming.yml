@@ -63,7 +63,7 @@ stages :
                 --name $(Build.DefinitionName) \
                 --template-file ./pattern1-data-lake-batch/infrastructure/main.bicep \
                 --location $(location) \
-                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=${{ parameters.objectIDofServicePrincipal }}sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
+                --parameters location=$(location) prefix=$(prefix) postfix=$(postfix) env=$(environment) objectID=${{ parameters.objectIDofServicePrincipal }} sqladministratorLoginPassword=${{ parameters.sqlserveradminpassword }}
 
   - stage: CheckOutBicepAndDeployAzureResources
     displayName: Deploy Azure Resources
