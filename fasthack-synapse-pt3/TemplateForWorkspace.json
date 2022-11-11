@@ -134,6 +134,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/query_the_stream_data')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "-- Please change the storage account name according to your environment\n\nSelect * FROM\n(\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://fasthackadlpt3.dfs.core.windows.net/curated/streaming/spark_structured_streaming_using_synapse/structured_streaming_eh/',\n        FORMAT = 'DELTA'\n    ) AS [result]\n) a \norder by a.enqueuedTime desc",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/synapse_structured_streaming')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -154,7 +174,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "23fea2c3-fc87-4f98-88ec-a4f59c9b8aee"
+						"spark.autotune.trackingId": "b1fa71d3-201b-4473-9ab7-cec9d98e0c6b"
 					}
 				},
 				"metadata": {
@@ -179,30 +199,12 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
+						"memory": 28,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							""
-						],
-						"outputs": [],
-						"execution_count": null
-					},
 					{
 						"cell_type": "markdown",
 						"metadata": {
@@ -302,7 +304,7 @@
 							"eh_conn_str = mssparkutils.credentials.getSecretWithLS(\"LS_KeyVault\", \"eh-conn-str\")"
 						],
 						"outputs": [],
-						"execution_count": 60
+						"execution_count": 2
 					},
 					{
 						"cell_type": "markdown",
@@ -339,7 +341,7 @@
 							"checkpointLocation = f\"abfss://curated@{datalake_name}.dfs.core.windows.net/streaming/spark_structured_streaming_using_synapse/_checkcpoint/structured_streaming_eh\""
 						],
 						"outputs": [],
-						"execution_count": 61
+						"execution_count": 3
 					},
 					{
 						"cell_type": "code",
@@ -364,7 +366,7 @@
 							""
 						],
 						"outputs": [],
-						"execution_count": 62
+						"execution_count": 4
 					},
 					{
 						"cell_type": "markdown",
@@ -400,7 +402,7 @@
 							"  .load()"
 						],
 						"outputs": [],
-						"execution_count": 63
+						"execution_count": 5
 					},
 					{
 						"cell_type": "markdown",
@@ -432,7 +434,7 @@
 							"df1 = df.withColumn(\"body\", df[\"body\"].cast(\"string\"))"
 						],
 						"outputs": [],
-						"execution_count": 64
+						"execution_count": 6
 					},
 					{
 						"cell_type": "markdown",
@@ -483,7 +485,7 @@
 							"    .awaitTermination()"
 						],
 						"outputs": [],
-						"execution_count": 65
+						"execution_count": 7
 					},
 					{
 						"cell_type": "markdown",
@@ -514,10 +516,49 @@
 							"collapsed": false
 						},
 						"source": [
-							"df = (spark.read.format(\"delta\").load(path=f\"abfss://curated@{datalake_name}.dfs.core.windows.net/streaming/spark_structured_streaming_using_synapse/structured_streaming_eh\"))"
+							"df = (spark.read.format(\"delta\").load(path=f\"abfss://curated@{datalake_name}.dfs.core.windows.net/streaming/spark_structured_streaming_using_synapse/structured_streaming_eh\"))\r\n",
+							"df.createOrReplaceTempView(\"stream_data\")"
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 10
+					},
+					{
+						"cell_type": "markdown",
+						"metadata": {
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"## Analyze the data\r\n",
+							""
+						]
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"microsoft": {
+								"language": "sparksql"
+							},
+							"collapsed": false
+						},
+						"source": [
+							"%%sql\r\n",
+							"select * from stream_data order by enqueuedTime desc"
+						],
+						"outputs": [],
+						"execution_count": 13
 					},
 					{
 						"cell_type": "markdown",
@@ -531,7 +572,10 @@
 						"source": [
 							"## Create the delta table.\r\n",
 							"- The query is needed to be executed only once. This is just to create the delta table.\r\n",
-							"- We can run this once the streaming has started writing the data into delta lake physical location."
+							"- We can run this once the streaming has started writing the data into delta lake physical location.\r\n",
+							"- you need to be the storage blob data contributor to oth the sotrage account. \r\n",
+							"1. synapse internal storage account\r\n",
+							"2. data lake storage account"
 						]
 					},
 					{
@@ -557,7 +601,7 @@
 							"  "
 						],
 						"outputs": [],
-						"execution_count": null
+						"execution_count": 9
 					},
 					{
 						"cell_type": "code",
