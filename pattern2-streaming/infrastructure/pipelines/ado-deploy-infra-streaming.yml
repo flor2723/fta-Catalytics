@@ -97,7 +97,7 @@ stages :
     displayName: Deploy Azure Function App
     jobs:
     - deployment: DevDeployAzFunction
-      displayName: Deploy Infra
+      displayName: Deploy Azure Function App
       pool:
         vmImage: $(ap_vm_image)
       environment: $(environment)

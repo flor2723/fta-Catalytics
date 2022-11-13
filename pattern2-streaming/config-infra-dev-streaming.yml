@@ -21,6 +21,6 @@ variables:
   synapseWorkspace: $(prefix)-synapse-$(postfix)$(environment)
   synapsedatalakegen2name: $(prefix)adlssyn$(postfix)$(environment)
   keyVaultName: $(prefix)-akv-$(postfix)$(environment)
-  eventHubNamespacename: '$(prefix)ehns$(postfix)$(env)'
-  functionAppname: '$(prefix)-fnapp-$(postfix)$(env)'
+  eventHubNamespacename: '$(prefix)ehns$(postfix)$(environment)'
+  functionAppname: '$(prefix)-fnapp-$(postfix)$(environment)'
 
