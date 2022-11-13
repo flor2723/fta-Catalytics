@@ -128,8 +128,6 @@ stages :
                 appName: $(functionAppname)
                 package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
 
-
-pattern2-streaming\src\EventGeneratorApp
   - stage: SynapseArtifactsDeployment
     displayName: Synapse pipelines/notebook/linkedservices/dataset deployment
     jobs:
