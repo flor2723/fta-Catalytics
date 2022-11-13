@@ -5,6 +5,7 @@ param objectID string
 param synapseManageIdentity string
 @secure()
 param ehnsconnstring string
+param funtionappKey string
 
 
 // Key Vault
@@ -44,6 +45,12 @@ resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
     name: 'eh-conn-str'
     properties: {
       value: ehnsconnstring
+    }
+  }
+  resource secret1 'secrets' = {
+    name: 'funtionappKey'
+    properties: {
+      value: funtionappKey
     }
   }
   tags: tags

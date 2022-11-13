@@ -35,6 +35,11 @@ var synapseWorkSpaceName = '${prefix}-synapse-${postfix}${env}'
 var datalakeName = '${prefix}adl${postfix}${env}'
 var keyVaultName = '${prefix}-akv-${postfix}${env}'
 
+//functoion related variables
+var appname = '${prefix}-fnapp-${postfix}${env}'
+var functionStorageAccountName = '${prefix}stfnapp${postfix}${env}'
+
+
 var sqladministratorLogin='rootuser'
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
@@ -84,7 +89,7 @@ module synapse './modules/deploy_2_synapse.bicep' = {
 
 // data lake
 
-module dl './modules/deploy_4_datalake_account.bicep' = {
+module dl './modules/deploy_3_datalake_account.bicep' = {
   name: 'dl'
   scope: resourceGroup(rg.name)
   params: {
@@ -101,9 +106,30 @@ module dl './modules/deploy_4_datalake_account.bicep' = {
   
 }
 
+// functoon deployment
+
+module fnapp './modules/deploy_4_function.bicep' = {
+  name: 'fnapp'
+  scope: resourceGroup(rg.name)
+  params: {
+    appName: appname
+    location: location
+    storageAccountType : 'Standard_LRS'
+    appInsightsLocation: location
+    functionStorageAccountName: functionStorageAccountName
+    runtime: 'python'
+    param_EVENT_HUB_CONN_STR_SYNAPSESTREAMING: ehns.outputs.eventHubNamespaceConnectionString
+    param_EVENT_HUB_NAME_SYNAPSESTREAMING: ehns.outputs.eventHubName
+  }
+  dependsOn: [
+    ehns    
+  ]
+  
+}
+
 // key vault  and secret creation
 
-module kv './modules/deploy_3_key_vault.bicep' = {
+module kv './modules/deploy_5_key_vault.bicep' = {
   name: 'kv'
   scope: resourceGroup(rg.name)
   params: {
@@ -113,11 +139,13 @@ module kv './modules/deploy_3_key_vault.bicep' = {
     objectID: objectID
     synapseManageIdentity: synapse.outputs.synapsemanageidentity
     ehnsconnstring: ehns.outputs.eventHubNamespaceConnectionString
+    funtionappKey: fnapp.outputs.defaultfunctionKey
     
   }
   dependsOn:[
     synapse
     ehns
+    fnapp
   ]
 }
 

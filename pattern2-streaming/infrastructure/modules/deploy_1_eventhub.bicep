@@ -142,4 +142,6 @@ var eventHubNamespaceConnectionString = listKeys(synapse_eh_access_policy.id, sy
 // Output our variables
 
 output eventHubNamespaceConnectionString string = eventHubNamespaceConnectionString
-output eventHubName string = eventhub_namespace.name
+output eventHubNameSpaceName string = eventhub_namespace.name
+output eventHubName string = synapse_eh.name
+
