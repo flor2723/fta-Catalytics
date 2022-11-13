@@ -8,6 +8,9 @@
 		"fasthack-synapse-pt3-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:fasthack-synapse-pt3.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
+		"LS_AZFunction_properties_typeProperties_functionAppUrl": {
+			"value": "https://fasthack-fnapp-pt3.azurewebsites.net"
+		},
 		"LS_KeyVault_properties_typeProperties_baseUrl": {
 			"value": "https://fasthack-akv-pt3.vault.azure.net/"
 		},

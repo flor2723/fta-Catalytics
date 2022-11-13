@@ -12,6 +12,10 @@
 			"metadata": "Secure string for 'connectionString' of 'fasthack-synapse-pt3-WorkspaceDefaultSqlServer'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:fasthack-synapse-pt3.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
+		"LS_AZFunction_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://fasthack-fnapp-pt3.azurewebsites.net"
+		},
 		"LS_KeyVault_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://fasthack-akv-pt3.vault.azure.net/"
@@ -29,6 +33,77 @@
 		"workspaceId": "[concat('Microsoft.Synapse/workspaces/', parameters('workspaceName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('workspaceName'), '/Generate_Event')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Azure Function1",
+						"type": "AzureFunctionActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"functionName": "EventGenerator",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"number_of_events": 80
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "LS_AZFunction",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/LS_AZFunction')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/LS_AZFunction')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFunction",
+				"typeProperties": {
+					"functionAppUrl": "[parameters('LS_AZFunction_properties_typeProperties_functionAppUrl')]",
+					"functionKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "LS_KeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "funtionappKey"
+					},
+					"authentication": "Anonymous"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('workspaceId'), '/linkedServices/LS_KeyVault')]"
+			]
+		},
 		{
 			"name": "[concat(parameters('workspaceName'), '/LS_KeyVault')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
@@ -174,7 +249,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "b1fa71d3-201b-4473-9ab7-cec9d98e0c6b"
+						"spark.autotune.trackingId": "62aacc68-23cf-4dfc-bca1-c453b6ae2e1d"
 					}
 				},
 				"metadata": {
@@ -199,8 +274,7 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
+						"memory": 28
 					},
 					"sessionKeepAliveTimeout": 30
 				},
