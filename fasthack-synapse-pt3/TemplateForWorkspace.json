@@ -34,13 +34,13 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/Generate_Event')]",
+			"name": "[concat(parameters('workspaceName'), '/PL_Generate_Event')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"activities": [
 					{
-						"name": "Azure Function1",
+						"name": "Trigger Azure Function",
 						"type": "AzureFunctionActivity",
 						"dependsOn": [],
 						"policy": {
