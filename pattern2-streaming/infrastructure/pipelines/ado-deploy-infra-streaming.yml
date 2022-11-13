@@ -105,6 +105,7 @@ stages :
         runOnce:
           deploy:
             steps:
+            - checkout: self
             - task: UsePythonVersion@0
               displayName: 'Use Python 3.6'
               inputs:
@@ -128,7 +129,7 @@ stages :
                 package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
 
 
-
+pattern2-streaming\src\EventGeneratorApp
   - stage: SynapseArtifactsDeployment
     displayName: Synapse pipelines/notebook/linkedservices/dataset deployment
     jobs:
